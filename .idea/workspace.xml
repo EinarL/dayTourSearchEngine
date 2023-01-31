@@ -143,6 +143,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="recentsLimit" value="5" />
   </component>
   <component name="RecentsManager">
@@ -150,7 +151,7 @@
       <recent name="C:\Users\Einar\IdeaProjects\dayTripProject\src\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DayTripApplication">
+  <component name="RunManager" selected="Application.DayTourApplication">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -214,8 +215,8 @@
       <option name="PROGRAM_PARAMETERS" />
       <method />
     </configuration>
-    <configuration name="DayTripApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="vidmot.DayTripApplication" />
+    <configuration name="DayTourApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="vidmot.DayTourApplication" />
       <module name="dayTourSearchEngine" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Einar\IdeaProjects\openjfx-17.0.1_windows-x64_bin-sdk\javafx-sdk-17.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -259,11 +260,11 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.DayTripApplication" />
+      <item itemvalue="Application.DayTourApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DayTripApplication" />
+        <item itemvalue="Application.DayTourApplication" />
       </list>
     </recent_temporary>
   </component>
