@@ -15,6 +15,7 @@ public class DayTourApplication extends Application {
         primaryStage.setTitle("Day Trip");
         primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 900));
         primaryStage.show();
+        primaryStage.setMinWidth(600);
         //primaryStage.setResizable(false);
         scene = primaryStage.getScene();
     }
