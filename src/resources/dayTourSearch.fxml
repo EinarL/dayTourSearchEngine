@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -24,9 +23,9 @@
     <RowConstraints maxHeight="619.0" minHeight="10.0" prefHeight="611.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ComboBox fx:id="areaDropdown" prefHeight="44.0" prefWidth="187.0" GridPane.columnIndex="1">
+      <ComboBox fx:id="areaDropdown" prefHeight="44.0" prefWidth="187.0" stylesheets="@../styles/style.css" GridPane.columnIndex="1">
          <GridPane.margin>
-            <Insets left="9.0" top="15.0" />
+            <Insets left="8.0" top="15.0" />
          </GridPane.margin>
       </ComboBox>
       <TextField prefHeight="44.0" prefWidth="306.0" GridPane.columnIndex="2">
@@ -42,14 +41,11 @@
             <Insets bottom="55.0" left="40.0" />
          </GridPane.margin>
       </Label>
-      <ChoiceBox accessibleRole="CHECK_MENU_ITEM" prefHeight="44.0" prefWidth="187.0" GridPane.columnIndex="3">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <GridPane.margin>
-            <Insets left="8.0" top="15.0" />
-         </GridPane.margin>
-      </ChoiceBox>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+      <ComboBox fx:id="sortDropdown" prefHeight="44.0" prefWidth="187.0" stylesheets="@../styles/style.css" GridPane.columnIndex="3">
+         <GridPane.margin>
+            <Insets left="9.0" top="15.0" />
+         </GridPane.margin>
+      </ComboBox>
    </children>
 </GridPane>
