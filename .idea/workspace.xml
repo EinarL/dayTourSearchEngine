@@ -55,6 +55,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -143,15 +144,22 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/HÍ 2022 Haust/Gagnasafnsfræði TÖL303G/v8/forritun/sqlite-jdbc-3.39.3.0.jar" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Einar\IdeaProjects\dayTourSearchEngine\src\vinnsla" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Einar\IdeaProjects\dayTourSearchEngine\src\vinnsla" />
       <recent name="C:\Users\Einar\IdeaProjects\dayTripProject\src\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DayTourApplication">
+  <component name="RunManager" selected="Application.DayTourSearchApplication">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -215,8 +223,8 @@
       <option name="PROGRAM_PARAMETERS" />
       <method />
     </configuration>
-    <configuration name="DayTourApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="vidmot.DayTourApplication" />
+    <configuration name="DayTourSearchApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="vidmot.DayTourSearchApplication" />
       <module name="dayTourSearchEngine" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Einar\IdeaProjects\openjfx-17.0.1_windows-x64_bin-sdk\javafx-sdk-17.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -260,11 +268,11 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.DayTourApplication" />
+      <item itemvalue="Application.DayTourSearchApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DayTourApplication" />
+        <item itemvalue="Application.DayTourSearchApplication" />
       </list>
     </recent_temporary>
   </component>
