@@ -18,7 +18,7 @@ public class DayTourController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> areas = FXCollections.observableArrayList("Vesturland","Norðurland","Suðurland","Austurland");
+        ObservableList<String> areas = FXCollections.observableArrayList("Allt land","Vesturland","Norðurland","Suðurland","Austurland");
 
         areaDropdown.setItems(areas);
         areaDropdown.setValue(areas.get(0));
