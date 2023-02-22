@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="resources.DayTourListing"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="resources.DayTourListing">
+   <children>
+      <ImageView fitHeight="294.0" fitWidth="320.0" pickOnBounds="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
+         <viewport>
+            <Rectangle2D />
+         </viewport>
+      </ImageView>
+      <Label layoutX="333.0" prefHeight="58.0" prefWidth="359.0" text="Nafn á dagsferð">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="691.0" layoutY="3.0" prefHeight="47.0" prefWidth="104.0" text="12.900kr" textAlignment="RIGHT">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_LEFT" layoutX="333.0" layoutY="58.0" prefHeight="164.0" prefWidth="459.0" text="Lýsing..." wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="333.0" layoutY="222.0" prefHeight="31.0" prefWidth="136.0" text="22/02/2022">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="333.0" layoutY="253.0" prefHeight="47.0" prefWidth="178.0" text="30 Pláss eftir" AnchorPane.bottomAnchor="4.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="43.0" fitWidth="242.0" layoutX="550.0" layoutY="254.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: MULTIPLY;">
+         <image>
+            <Image url="@../images/stars/5rating.png" />
+         </image>
+      </ImageView>
+   </children>
 </AnchorPane>
