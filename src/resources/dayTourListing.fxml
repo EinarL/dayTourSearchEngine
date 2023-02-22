@@ -33,7 +33,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="333.0" layoutY="222.0" prefHeight="31.0" prefWidth="136.0" text="22/02/2022">
+      <Label layoutX="333.0" layoutY="222.0" prefHeight="31.0" prefWidth="136.0" text="22/02/2023">
          <font>
             <Font size="18.0" />
          </font>
@@ -51,5 +51,10 @@
             <Image url="@../images/stars/5rating.png" />
          </image>
       </ImageView>
+      <Label alignment="CENTER_RIGHT" layoutX="656.0" layoutY="222.0" prefHeight="31.0" prefWidth="136.0" text="Vesturland" textAlignment="RIGHT">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
