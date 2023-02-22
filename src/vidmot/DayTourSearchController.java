@@ -7,14 +7,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import vinnsla.Database;
+import vinnsla.DayTour;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class DayTourController implements Initializable {
+public class DayTourSearchController implements Initializable {
 
     @FXML private ComboBox<String> areaDropdown;
     @FXML private ComboBox<String> sortDropdown;
+
+    private DayTour[] dayTours;
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -27,5 +32,12 @@ public class DayTourController implements Initializable {
 
         sortDropdown.setItems(differentSorts);
         sortDropdown.setValue(differentSorts.get(0));
+
+        try {
+            dayTours = Database.getDayToursByArea(areas.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(Arrays.toString(dayTours));
     }
 }
