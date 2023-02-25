@@ -36,4 +36,41 @@ public class DayTour{
         this.rating = rating;
     }
 
+     public String getTourTitle(){
+        return tourTitle;
+     }
+
+     public String getDesc(){
+        return desc;
+     }
+
+    public String[] getImages() {
+        return images;
+    }
+
+    public String getFrontImage(){
+        if (images.length > 0)
+            return images[0];
+        return null;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public int getSpotsLeft() {
+        return spotsLeft;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public float getRating() {
+        return rating;
+    }
 }
