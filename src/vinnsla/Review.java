@@ -9,9 +9,9 @@ public class Review {
     private String tourName;
     private DayTour dayTour;
     private String review;
-    private double stars;
+    private float stars;
 
-    public Review(String tourName, DayTour dayTour, String review, double stars){
+    public Review(String tourName, DayTour dayTour, String review, float stars){
         this.tourName = tourName;
         this.dayTour = dayTour;
         this.review = review;
@@ -24,9 +24,9 @@ public class Review {
 
     public String getReview() { return review; }
 
-    public double getStars() { return stars; }
+    public float getStars() { return stars; }
 
-    public void updateStars(Double updatedStars){
+    public void updateStars(float updatedStars){
         stars = updatedStars;
     }
 

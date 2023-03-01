@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/vinnsla/Booking.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vinnsla/Participant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/vinnsla/Review.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_0_31.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_0_31.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourListing.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourListing.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourSearchApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourSearchApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourSearchController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourSearchController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vinnsla/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vinnsla/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vinnsla/DayTour.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vinnsla/DayTour.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vinnsla/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vinnsla/Review.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
