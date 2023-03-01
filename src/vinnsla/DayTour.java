@@ -36,7 +36,7 @@ public class DayTour{
         this.rating = rating;
     }
 
-     public String getTourTitle(){
+    public String getTourTitle(){
         return tourTitle;
      }
 
@@ -44,15 +44,7 @@ public class DayTour{
         return desc;
      }
 
-    public String[] getImages() {
-        return images;
-    }
-
-    public String getFrontImage(){
-        if (images.length > 0)
-            return images[0];
-        return null;
-    }
+     public int getId(){ return ID; }
 
     public Date getDate() {
         return date;
@@ -61,6 +53,8 @@ public class DayTour{
     public int getPrice() {
         return price;
     }
+
+    public int getMaxSpots(){ return maxSpots; }
 
     public int getSpotsLeft() {
         return spotsLeft;
@@ -73,4 +67,20 @@ public class DayTour{
     public float getRating() {
         return rating;
     }
+
+    public String[] getImages() {
+        return images;
+    }
+
+    public String getFrontImage(){
+        if (images.length > 0)
+            return images[0];
+        return null;
+    }
+
+    public boolean isFull(){
+        return spotsLeft == 0;
+    }
+
+
 }
