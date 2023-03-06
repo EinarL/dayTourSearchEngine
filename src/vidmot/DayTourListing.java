@@ -44,6 +44,10 @@ public class DayTourListing extends AnchorPane {
         this.date.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
         this.area.setText(area);
 
+        String ratingStr = Float.toString(rating);
+        String ratingNoDots = ratingStr.replace(".","");
+        this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
+
 
     }
 }
