@@ -2,10 +2,14 @@ package vidmot;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -35,7 +39,6 @@ public class DayTourListing extends AnchorPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
         this.title.setText(title);
         this.desc.setText(desc);
         this.price.setText(price + "kr.");
@@ -44,10 +47,41 @@ public class DayTourListing extends AnchorPane {
         this.date.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
         this.area.setText(area);
 
-        String ratingStr = Float.toString(rating);
+        // rounded corners on image:
+        final Rectangle clip = new Rectangle();
+        clip.arcWidthProperty().set(25);
+        clip.arcHeightProperty().set(25);
+        clip.setWidth(this.image.getLayoutBounds().getWidth());
+        clip.setHeight(this.image.getLayoutBounds().getHeight());
+        this.image.setClip(clip);
+
+        String ratingStr;
+        if (rating % 1 == 0){
+            int ratingInt = Math.round(rating);
+            ratingStr = Integer.toString(ratingInt);
+        }else{
+            ratingStr = Float.toString(rating);
+        }
+
         String ratingNoDots = ratingStr.replace(".","");
         this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
 
 
+
+
+    }
+
+    private Node shadowRoundedNode(Node inputNode){
+        final Rectangle clip = new Rectangle();
+        clip.arcWidthProperty().bind(clip.heightProperty().divide(4));
+        clip.arcHeightProperty().bind(clip.heightProperty().divide(4));
+        clip.setWidth(inputNode.getLayoutBounds().getWidth());
+        clip.setHeight(inputNode.getLayoutBounds().getHeight());
+        inputNode.setClip(clip);
+
+        Group group = new Group(inputNode);
+        group.setEffect(new DropShadow());
+
+        return group;
     }
 }
