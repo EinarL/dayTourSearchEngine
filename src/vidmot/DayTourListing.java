@@ -43,7 +43,6 @@ public class DayTourListing extends AnchorPane {
         this.desc.setText(desc);
         this.price.setText(price + "kr.");
         this.spotsLeft.setText(spotsLeft + " pláss eftir");
-        System.out.println("showing image: " + image);
         this.image.setImage(new Image(image));
         this.date.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
         this.area.setText(area);

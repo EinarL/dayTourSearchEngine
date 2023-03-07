@@ -8,22 +8,34 @@ import java.util.Date;
 public class Database {
 
     /**
-     * Þessi aðferð skilar dagsferðum sem tilheyra tilteknu landssvæði.
+     * Þessi aðferð skilar dagsferðum sem tilheyra landssvæðinu 'area'
+     * og hafa titil sem er líkt og 'search'. Þeim dagsferðum eru röðuð eftir 'order'.
      * @param area fá aðeins þá sem tilheyra þessu landssvæði,
      *             getur verið: "Allt land","Vesturland","Norðurland","Suðurland" eða "Austurland",
      *             ef það er "Allt land", þá skilar aðferðin öllum dagsferðum.
-     * @return skilar þeim dagsferðum sem tilheyra tilteknu landssvæði.
+     * @param search leitarstrengur fyrir Title í dagsferð.
+     * @param order Strengur sem segir til um hvort á að raða eftir Einkunn eða Stafrófsröð.
+     * @return skilar lista af dagsferðum.
      */
-    public static DayTour[] getDayToursByArea(String area) throws Exception{
+    public static DayTour[] getDayTours(String area, String search, String order) throws Exception{
         Class.forName("org.sqlite.JDBC");
+
+        String orderBy = switch (order) {
+            case "Einkunn" -> "Rating DESC";
+            case "Stafrófsröð" -> "Title";
+            default -> null;
+        };
 
         Connection conn = null;
         try{
             conn = DriverManager.getConnection("jdbc:sqlite:src/database/dayTourSearchEngine.db");
             Statement s = conn.createStatement();
-            String query = "SELECT * FROM dayTours WHERE Location = '" + area + "'";
+            String query = "SELECT * FROM dayTours WHERE Title LIKE '%" + search +  "%' AND Location = '" + area + "'";
             if (area.equals("Allt land")){
-                query = "SELECT * FROM dayTours";
+                query = "SELECT * FROM dayTours WHERE Title LIKE '%" + search + "%'";
+            }
+            if (orderBy != null){
+                query += " ORDER BY " + orderBy;
             }
 
             ResultSet res = s.executeQuery(query);
@@ -51,17 +63,6 @@ public class Database {
                 System.err.println(e.getMessage());
             }
         }
-
-        return null;
-    }
-
-    /**
-     *  Þessi aðferð skilar þeim dagsferðum sem innihalda strenginn s í nafninu sínu?
-     *  við eigum eftir að ákveða hvort við viljum líka leita í t.d. description.
-     * @param s Strengur til að leita eftir.
-     * @return
-     */
-    public DayTour[] getDayToursBySearch(String s){
 
         return null;
     }
