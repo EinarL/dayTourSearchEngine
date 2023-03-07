@@ -11,7 +11,7 @@ public class DayTourSearchApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(DayTourSearchApplication.class.getResource("../resources/dayTourSearch.fxml"));
         primaryStage.setTitle("Day Trip Search");
         primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 900));
-        primaryStage.setMinWidth(600);
+        primaryStage.setMinWidth(1100);
         primaryStage.show();
     }
 

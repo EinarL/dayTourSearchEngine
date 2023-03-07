@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="800.0" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="1000.0" style="-fx-border-color: lightgray; -fx-border-width: 2px; -fx-border-radius: 15px; -fx-background-radius: 15px;" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="image" fitHeight="294.0" fitWidth="320.0" pickOnBounds="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
+      <ImageView fx:id="image" fitHeight="294.0" fitWidth="320.0" pickOnBounds="true" style="-fx-border-radius: 15px;" translateX="-2.0" translateY="-2.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
          <viewport>
             <Rectangle2D />
          </viewport>
       </ImageView>
-      <Label fx:id="title" layoutX="333.0" prefHeight="58.0" prefWidth="359.0" text="Nafn á dagsferð">
+      <Label fx:id="title" layoutX="333.0" prefHeight="58.0" prefWidth="564.0" text="Nafn á dagsferð">
          <font>
             <Font size="36.0" />
          </font>
@@ -24,12 +24,12 @@
             <Insets top="5.0" />
          </padding>
       </Label>
-      <Label fx:id="price" alignment="CENTER_RIGHT" layoutX="691.0" layoutY="3.0" prefHeight="47.0" prefWidth="104.0" text="12.900kr" textAlignment="RIGHT">
+      <Label fx:id="price" alignment="CENTER_RIGHT" layoutX="889.0" layoutY="6.0" prefHeight="47.0" prefWidth="104.0" text="12.900kr" textAlignment="RIGHT">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="desc" alignment="TOP_LEFT" layoutX="333.0" layoutY="58.0" prefHeight="164.0" prefWidth="459.0" text="Lýsing..." wrapText="true">
+      <Label fx:id="desc" alignment="TOP_LEFT" layoutX="333.0" layoutY="58.0" prefHeight="164.0" prefWidth="558.0" text="Lýsing..." wrapText="true">
          <font>
             <Font size="18.0" />
          </font>
@@ -47,7 +47,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fx:id="starImg" fitHeight="58.0" fitWidth="242.0" layoutX="550.0" layoutY="254.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" rotate="180.0" scaleY="1.2" style="-fx-blend-mode: MULTIPLY;">
+      <ImageView fx:id="starImg" fitHeight="58.0" fitWidth="242.0" layoutX="751.0" layoutY="249.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" rotate="180.0" scaleY="1.2" style="-fx-blend-mode: MULTIPLY;">
          <image>
             <Image url="@../images/stars/35rating.png" />
          </image>
@@ -55,7 +55,7 @@
             <Point3D y="360.0" z="90.0" />
          </rotationAxis>
       </ImageView>
-      <Label fx:id="area" alignment="CENTER_RIGHT" layoutX="656.0" layoutY="222.0" prefHeight="31.0" prefWidth="136.0" text="Vesturland" textAlignment="RIGHT">
+      <Label fx:id="area" alignment="CENTER_RIGHT" layoutX="857.0" layoutY="217.0" prefHeight="31.0" prefWidth="136.0" text="Vesturland" textAlignment="RIGHT">
          <font>
             <Font size="18.0" />
          </font>

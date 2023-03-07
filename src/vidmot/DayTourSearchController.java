@@ -8,8 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import vinnsla.Database;
 import vinnsla.DayTour;
 
@@ -22,7 +24,7 @@ public class DayTourSearchController implements Initializable {
 
     @FXML private ComboBox<String> areaDropdown;
     @FXML private ComboBox<String> sortDropdown;
-    //@FXML private GridPane gridPane;
+    @FXML private ScrollPane scrollPane;
     @FXML private VBox dayTourWindow;
 
 
@@ -36,6 +38,12 @@ public class DayTourSearchController implements Initializable {
 
         sortDropdown.setItems(differentSorts);
         sortDropdown.setValue(differentSorts.get(0));
+
+        // þetta er til þess að laga villu þar sem dagsferðir fóru fyrir utan scrollPane:
+        Rectangle clip = new Rectangle(scrollPane.getWidth(), scrollPane.getHeight()-5);
+        clip.heightProperty().bind(scrollPane.heightProperty());
+        clip.widthProperty().bind(scrollPane.widthProperty());
+        scrollPane.setClip(clip);
 
         try {
             showDayTours(areaDropdown.getValue());
@@ -55,8 +63,7 @@ public class DayTourSearchController implements Initializable {
             e.printStackTrace();
         }
         if(dayTours == null) return;
-        // fáum VBox-ið, það er glugginn sem við munum bæta við dagsferðunum á
-        //VBox dayTourPane = (VBox) dtsScene.lookup("#dayTourWindow");
+
         dayTourWindow.getChildren().clear(); // fjarlægjum allar dagsferðir áður en við birtum þær
         for(DayTour dt : dayTours){
             DayTourListing dtListing = new DayTourListing(dt.getTourTitle(), dt.getDesc(), dt.getPrice(), dt.getSpotsLeft(), dt.getFrontImage(), dt.getDate(), dt.getLocation(), dt.getRating());

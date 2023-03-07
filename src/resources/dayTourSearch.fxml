@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<GridPane fx:id="gridPane" accessibleRole="COMBO_BOX" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="707.0" prefWidth="1051.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.DayTourSearchController">
+<GridPane fx:id="gridPane" accessibleRole="COMBO_BOX" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.DayTourSearchController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="204.0" minWidth="204.0" prefWidth="204.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="408.0" minWidth="10.0" prefWidth="230.0" />
-    <ColumnConstraints hgrow="NEVER" maxWidth="204.0" minWidth="204.0" prefWidth="204.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="600.0" />
+    <ColumnConstraints hgrow="NEVER" maxWidth="226.0" minWidth="204.0" prefWidth="225.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="62.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="96.0" minHeight="96.0" prefHeight="96.0" valignment="CENTER" vgrow="NEVER" />
-    <RowConstraints maxHeight="619.0" minHeight="10.0" prefHeight="611.0" vgrow="SOMETIMES" />
+    <RowConstraints fillHeight="false" maxHeight="2000.0" minHeight="10.0" prefHeight="611.0" vgrow="ALWAYS" />
   </rowConstraints>
    <children>
       <ComboBox fx:id="areaDropdown" prefHeight="44.0" prefWidth="187.0" stylesheets="@../styles/style.css" GridPane.columnIndex="1">
@@ -33,14 +39,18 @@
             <Font size="24.0" />
          </font>
          <GridPane.margin>
-            <Insets bottom="55.0" left="40.0" />
+            <Insets bottom="55.0" left="55.0" />
          </GridPane.margin>
       </Label>
-      <VBox fx:id="dayTourWindow" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-      <ComboBox fx:id="sortDropdown" prefHeight="44.0" prefWidth="187.0" stylesheets="@../styles/style.css" GridPane.columnIndex="3">
+      <ComboBox fx:id="sortDropdown" prefHeight="44.0" prefWidth="203.0" stylesheets="@../styles/style.css" GridPane.columnIndex="3">
          <GridPane.margin>
             <Insets left="9.0" top="15.0" />
          </GridPane.margin>
       </ComboBox>
+      <ScrollPane fx:id="scrollPane" cacheShape="false" centerShape="false" focusTraversable="false" hbarPolicy="NEVER" minViewportHeight="200.0" minViewportWidth="1005.0" pickOnBounds="false" prefHeight="2000.0" prefViewportHeight="611.0" prefViewportWidth="1000.0" prefWidth="1050.0" scaleShape="false" stylesheets="@../styles/style.css" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+         <content>
+            <VBox fx:id="dayTourWindow" spacing="5.0" />
+         </content>
+      </ScrollPane>
    </children>
 </GridPane>
