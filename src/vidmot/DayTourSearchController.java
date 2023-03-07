@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -26,6 +27,7 @@ public class DayTourSearchController implements Initializable {
     @FXML private ComboBox<String> sortDropdown;
     @FXML private ScrollPane scrollPane;
     @FXML private VBox dayTourWindow;
+    @FXML private TextField searchBar;
 
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,7 +48,7 @@ public class DayTourSearchController implements Initializable {
         scrollPane.setClip(clip);
 
         try {
-            showDayTours(areaDropdown.getValue());
+            showDayTours();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,10 +57,10 @@ public class DayTourSearchController implements Initializable {
     /**
      * Þessi aðferð birtir dagsferðirnar á "dayTourSearch.fxml" gluggann.
      */
-    private void showDayTours(String areaDropdownValue) throws IOException {
+    public void showDayTours() throws IOException {
         DayTour[] dayTours = null;
         try {
-            dayTours = Database.getDayToursByArea(areaDropdownValue);
+            dayTours = Database.getDayTours(areaDropdown.getValue(), searchBar.getText(), sortDropdown.getValue());
         } catch (Exception e) {
             e.printStackTrace();
         }
