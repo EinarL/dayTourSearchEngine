@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="resources.DayTourSite">
+   <children>
+      <ImageView fitHeight="444.0" fitWidth="588.0" layoutX="14.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="1173.0" text="Titill á dagsferð">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="609.0" layoutY="62.0" prefHeight="35.0" prefWidth="261.0" text="9990kr.">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="609.0" layoutY="137.0" prefHeight="35.0" prefWidth="261.0" text="Date: 00/00/0000">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="609.0" layoutY="172.0" prefHeight="35.0" prefWidth="261.0" text="50 out of 50 seats left">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="609.0" layoutY="207.0" prefHeight="35.0" prefWidth="261.0" text="Location: landssvæði">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="609.0" layoutY="242.0" prefHeight="35.0" prefWidth="261.0" text="Duration: 2 hours">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="desc" alignment="TOP_LEFT" layoutX="14.0" layoutY="511.0" prefHeight="253.0" prefWidth="1173.0" text="Description..." wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="starImg" fitHeight="84.0" fitWidth="281.0" layoutX="905.0" layoutY="67.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" rotate="180.0" style="-fx-blend-mode: MULTIPLY;">
+         <image>
+            <Image url="@../images/stars/35rating.png" />
+         </image>
+         <rotationAxis>
+            <Point3D y="90.0" z="1.0" />
+         </rotationAxis>
+      </ImageView>
+      <Button defaultButton="true" layoutX="609.0" layoutY="426.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="171.0" text="Book Trip">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Button>
+      <Button layoutX="21.0" layoutY="251.0" mnemonicParsing="false" onAction="#previousImage" opacity="0.5" prefHeight="77.0" prefWidth="85.0" text="〈">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button alignment="CENTER_RIGHT" layoutX="509.0" layoutY="251.0" mnemonicParsing="false" onAction="#nextImage" opacity="0.5" prefHeight="77.0" prefWidth="85.0" text="〉">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
