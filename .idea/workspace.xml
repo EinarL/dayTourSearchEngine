@@ -5,8 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/vidmot/DayTourSiteController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_39_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/vinnsla/DayTour.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vinnsla/DayTour.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/database/dayTourSearchEngine.db" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/database/dayTourSearchEngine.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourListing.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourListing.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourSearchApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourSearchApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourSearchController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vidmot/DayTourSearchController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vinnsla/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vinnsla/Database.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vinnsla/DayTour.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/dayTourSearchEngine/vinnsla/DayTour.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/dayTourSearchEngine.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/dayTourSearchEngine.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/dayTourSite.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/dayTourSite.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vidmot/DayTourSearchApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vidmot/DayTourSearchApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vinnsla/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vinnsla/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/vinnsla/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/vinnsla/Comment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,8 +70,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -140,11 +153,20 @@
     <option name="showModules" value="false" />
     <option name="sortByType" value="true" />
   </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/sqlite-jdbc-3.39.3.0.jar",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Einar\IdeaProjects\dayTourSearchEngine\src\vinnsla" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Notandi\Documents\GitHub\dayTourSearchEngine\src\vinnsla" />
       <recent name="C:\Users\Einar\IdeaProjects\dayTourSearchEngine\src\vinnsla" />
       <recent name="C:\Users\Einar\IdeaProjects\dayTripProject\src\resources" />
     </key>
@@ -173,15 +195,6 @@
     </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="TestNG">
-      <option name="TEST_OBJECT" value="CLASS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="TEST_SEARCH_SCOPE">
         <value defaultName="moduleWithDependencies" />
@@ -196,11 +209,16 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file enabled="true" id="idea.log" />
+    <configuration name="Database" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="vinnsla.Database" />
+      <module name="dayTourSearchEngine" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="vinnsla.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -208,7 +226,7 @@
     <configuration name="DayTourSearchApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="vidmot.DayTourSearchApplication" />
       <module name="dayTourSearchEngine" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Einar\IdeaProjects\javafx-sdk-19.0.2.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Notandi\javafx-sdk-19.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -245,13 +263,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Database" />
       <item itemvalue="Application.DayTourSearchApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.DayTourSearchApplication" />
+        <item itemvalue="Application.Database" />
       </list>
     </recent_temporary>
   </component>
@@ -310,7 +348,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />

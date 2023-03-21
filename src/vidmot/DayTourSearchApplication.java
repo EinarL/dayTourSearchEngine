@@ -10,7 +10,7 @@ public class DayTourSearchApplication extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader fxmlLoader = new FXMLLoader(DayTourSearchApplication.class.getResource("../resources/dayTourSearch.fxml"));
         primaryStage.setTitle("Day Trip Search");
-        primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 900));
+        primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 800));
         primaryStage.setMinWidth(1100);
         primaryStage.show();
     }

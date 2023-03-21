@@ -4,14 +4,14 @@ package vinnsla;
  * Klasi fyrir review
  */
 
-public class Review {
+public class Comment {
 
     private String tourName;
     private DayTour dayTour;
     private String review;
     private float stars;
 
-    public Review(String tourName, DayTour dayTour, String review, float stars){
+    public Comment(String tourName, DayTour dayTour, String review, float stars){
         this.tourName = tourName;
         this.dayTour = dayTour;
         this.review = review;
