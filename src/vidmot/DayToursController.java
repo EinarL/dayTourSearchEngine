@@ -6,15 +6,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import vinnsla.Database;
 import vinnsla.DayTour;
+import vinnsla.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,7 +21,6 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class DayToursController implements Initializable {
-
     @FXML private ComboBox<String> areaDropdown;
     @FXML private ComboBox<String> sortDropdown;
     @FXML private ScrollPane scrollPane;
@@ -52,6 +50,7 @@ public class DayToursController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("User is: " + User.getUsername());
     }
 
     /**
