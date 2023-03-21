@@ -169,7 +169,7 @@
       <recent name="C:\Users\Einar\IdeaProjects\dayTripProject\src\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DayTourSearchApplication">
+  <component name="RunManager" selected="Application.DayToursApplication">
     <configuration default="true" type="Applet" factoryName="Applet">
       <module name="" />
       <option name="MAIN_CLASS_NAME" />
@@ -239,8 +239,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DayTourSearchApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="vidmot.DayTourSearchApplication" />
+    <configuration name="DayToursApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="vidmot.DayToursApplication" />
       <module name="dayTourSearchEngine" />
       <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\Einar\IdeaProjects\javafx-sdk-19.0.2.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
@@ -282,11 +282,11 @@
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.Database" />
-      <item itemvalue="Application.DayTourSearchApplication" />
+      <item itemvalue="Application.DayToursApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DayTourSearchApplication" />
+        <item itemvalue="Application.DayToursApplication" />
         <item itemvalue="Application.Database" />
       </list>
     </recent_temporary>
