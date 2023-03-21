@@ -5,10 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class DayTourSearchApplication extends Application {
+public class DayToursApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(DayTourSearchApplication.class.getResource("../resources/dayTourSearch.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
         primaryStage.setTitle("Day Trip Search");
         primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 800));
         primaryStage.setMinWidth(1100);

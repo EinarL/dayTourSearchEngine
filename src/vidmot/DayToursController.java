@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-public class DayTourSearchController implements Initializable {
+public class DayToursController implements Initializable {
 
     @FXML private ComboBox<String> areaDropdown;
     @FXML private ComboBox<String> sortDropdown;
@@ -36,7 +36,7 @@ public class DayTourSearchController implements Initializable {
         areaDropdown.setItems(areas);
         areaDropdown.setValue(areas.get(0));
 
-        ObservableList<String> differentSorts = FXCollections.observableArrayList("Einkunn","Stafrófsröð");
+        ObservableList<String> differentSorts = FXCollections.observableArrayList("Einkunn","Stafrófsröð","Verð");
 
         sortDropdown.setItems(differentSorts);
         sortDropdown.setValue(differentSorts.get(0));

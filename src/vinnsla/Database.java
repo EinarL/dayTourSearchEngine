@@ -25,6 +25,7 @@ public class Database {
         String orderBy = switch (order) {
             case "Einkunn" -> "Rating DESC";
             case "Stafrófsröð" -> "Title";
+            case "Verð" -> "Price";
             default -> null;
         };
 
