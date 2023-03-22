@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.w3c.dom.Text;
 import vinnsla.Database;
+import vinnsla.User;
 
 import java.io.IOException;
 import java.net.Inet4Address;
@@ -36,6 +37,7 @@ public class DayTourBookController {
     @FXML private TextField phonen;
     @FXML private TextField numPeople;
     private static int spotsl;
+    private static String user;
 
 
     public void setTourInfo(String title, String date, String spotsLeft, String area, String description, ImageView imageView, ImageView starslmg, int spotsl){
@@ -49,11 +51,12 @@ public class DayTourBookController {
         this.spotsl = spotsl;
         bookTourButton.setDisable(true);
         message.setText("");
+        user = User.getUsername();
     }
 
     public void bookTour() throws InterruptedException, IOException {
         int num = Integer.valueOf(numPeople.getText());
-        Database.updateSpotsLeft(title.getText(), num);
+        Database.addBooking(user, num, title.getText());
         message.setText("Bókun staðfest, góða skemmtun!");
 
         sleep();
@@ -69,9 +72,6 @@ public class DayTourBookController {
     }
 
 
-    public void sleep() throws InterruptedException {
-        Thread.sleep(3000);
-    }
     public void goBack() throws IOException {
         Stage primaryStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
@@ -99,7 +99,9 @@ public class DayTourBookController {
         else{
             message.setText("Vinsamlega kláraðu að fylla út upplýsingar");
         }
+    }
 
-
+    public void sleep() throws InterruptedException {
+        Thread.sleep(3000);
     }
 }

@@ -3,8 +3,10 @@ package vinnsla;
 import java.awt.*;
 import java.sql.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Database {
@@ -97,12 +99,41 @@ public class Database {
 
     }
 
-    public void addBooking(String user, int numParticiapants, int dayTourId){
 
+    public static void addBooking(String user, int numParticiapants, String tourName){
+        try{
+            getConnection();
+
+            Statement s = conn.createStatement();
+
+            String query = "SELECT SpotsLeft from dayTours WHERE title = '" + tourName + "'";
+            ResultSet rs = s.executeQuery(query);
+            int spots = rs.getInt(1);
+            int newSpots = spots - numParticiapants;
+
+            String sql = "UPDATE dayTours SET SpotsLeft = " + newSpots + " WHERE title = '" + tourName + "'";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+
+            query = "SELECT ID FROM dayTours WHERE Title='" + tourName +"'";
+            rs = s.executeQuery(query);
+            int id = rs.getInt(1);
+
+            sql = "INSERT INTO bookings VALUES(?,?,?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user);
+            pstmt.setInt(2, id);
+            pstmt.setInt(3, numParticiapants);
+            pstmt.executeUpdate();
+
+
+        }catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     public void removeBooking(String user, int dayTourId){
-
+        
     }
 
     public void addComment(int dayTourId, String user, String comment, Date date){
@@ -162,34 +193,45 @@ public class Database {
         return false;
     }
 
-    public static void updateSpotsLeft(String title, int spotsOrdered){
-        try{
+
+    public static DayTour[] getDayToursByUserBooked(String user) throws ClassNotFoundException, SQLException {
+
+        ArrayList<DayTour> dayTourArray = null;
+        try {
             getConnection();
 
             Statement s = conn.createStatement();
-
-            String query = "SELECT SpotsLeft from dayTours WHERE title = '" + title + "'";
+            String query = "SELECT dayTourID from bookings WHERE username ='" + user + "'";
             ResultSet rs = s.executeQuery(query);
-            int spots = rs.getInt(1);
-            int newSpots = spots - spotsOrdered;
 
-            String sql = "UPDATE dayTours SET SpotsLeft = " + newSpots + " WHERE Title = '" + title + "'";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.executeUpdate();
+            dayTourArray = new ArrayList<>();
+            while (rs.next()) {
+                query = "SELECT * from dayTours WHERE ID='" + rs.getInt(1) + "'";
+                ResultSet res = s.executeQuery(query);
+                while (res.next()){
+                    String[] imgs = res.getString("Images").split(",");
+                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
+                    DayTour dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), imgs, date,
+                            res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
+                            res.getInt("Duration"), res.getFloat("Rating"));
+                    dayTourArray.add(dt);
+                }
+            }
+            return dayTourArray.toArray(DayTour[]::new);
 
-
-        }catch(SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
+        return dayTourArray.toArray(DayTour[]::new);
     }
+
 
     /*
     public static void main(String[] args) throws Exception {
-        updateSpotsLeft("Whale Watching Cruise", 6);
+        addBooking("12", 5, "South Shore Adventure");
     }
 
      */
-
-
-
 }

@@ -14,13 +14,6 @@ public class DayToursApplication extends Application {
         primaryStage.setScene(new Scene(fxmlLoader.load(), 600, 400));
         primaryStage.show();
         primaryStage.setResizable(false);
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
-        primaryStage.setTitle("Day Trip Search");
-        primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 800));
-        primaryStage.setMinWidth(1100);
-        primaryStage.show();
-        */
     }
 
     public static void main(String[] args) {
