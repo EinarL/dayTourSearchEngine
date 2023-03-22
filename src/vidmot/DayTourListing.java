@@ -1,15 +1,20 @@
 package vidmot;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import vinnsla.DayTour;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -29,6 +34,7 @@ public class DayTourListing extends AnchorPane {
     @FXML private Label date;
     @FXML private Label area; // landssvæði
     @FXML private ImageView starImg;
+    private static int spotsl;
 
     public DayTourListing(String title, String desc, int price, int spotsLeft, String image, Date date, String area, float rating) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/dayTourListing.fxml"));
@@ -46,6 +52,7 @@ public class DayTourListing extends AnchorPane {
         this.image.setImage(new Image(image));
         this.date.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
         this.area.setText(area);
+        spotsl = spotsLeft;
 
         // rounded corners on image:
         final Rectangle clip = new Rectangle();
@@ -65,10 +72,6 @@ public class DayTourListing extends AnchorPane {
 
         String ratingNoDots = ratingStr.replace(".","");
         this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
-
-
-
-
     }
 
     private Node shadowRoundedNode(Node inputNode){
@@ -84,4 +87,16 @@ public class DayTourListing extends AnchorPane {
 
         return group;
     }
+
+    public void bookTour(ActionEvent ae) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/bookDayTour.fxml"));
+        Parent root = fxmlLoader.load();
+        DayTourBookController cont = fxmlLoader.getController();
+        cont.setTourInfo(title.getText(), date.getText(), spotsLeft.getText(), area.getText(), desc.getText(), image, starImg, spotsl);
+        Stage stage = (Stage)((Node)ae.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 997, 605);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }

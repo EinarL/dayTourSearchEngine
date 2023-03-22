@@ -162,13 +162,34 @@ public class Database {
         return false;
     }
 
+    public static void updateSpotsLeft(String title, int spotsOrdered){
+        try{
+            getConnection();
+
+            Statement s = conn.createStatement();
+
+            String query = "SELECT SpotsLeft from dayTours WHERE title = '" + title + "'";
+            ResultSet rs = s.executeQuery(query);
+            int spots = rs.getInt(1);
+            int newSpots = spots - spotsOrdered;
+
+            String sql = "UPDATE dayTours SET SpotsLeft = " + newSpots + " WHERE Title = '" + title + "'";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+
+
+        }catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+    }
 
     /*
-    public static void main(String[] args) throws ClassNotFoundException {
-        addDayTour("Test", "Þetta er test til að sjá hvort hægt sé að bæta við dayTour", "https://media.tacdn.com/media/attractions-splice-spp-674x446/0d/0a/2a/fd.jpg",
-                "03/07/2023", 10490, 65, 65, "Austurland", 5, 4);
+    public static void main(String[] args) throws Exception {
+        updateSpotsLeft("Whale Watching Cruise", 6);
     }
-    */
+
+     */
+
 
 
 }
