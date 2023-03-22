@@ -1,5 +1,6 @@
 package vinnsla;
 
+import javax.xml.transform.Result;
 import java.awt.*;
 import java.sql.*;
 import java.text.DateFormat;
@@ -132,8 +133,35 @@ public class Database {
         }
     }
 
-    public void removeBooking(String user, int dayTourId){
-        
+    public static void removeBooking(String user, String tourName){
+        try{
+            getConnection();
+            Statement s = conn.createStatement();
+
+            String query = "SELECT ID FROM dayTours WHERE title = '" + tourName + "'";
+            ResultSet rs = s.executeQuery(query);
+            int dayTourId = rs.getInt(1);
+
+            query = "SELECT numParticipants FROM bookings WHERE username = '" + user + "' AND dayTourID = " + dayTourId;
+            rs = s.executeQuery(query);
+            int numParticipants = rs.getInt(1);
+
+            query = "SELECT spotsLeft FROM dayTours WHERE title = '" + tourName + "'";
+            rs = s.executeQuery(query);
+            int oldSpots = rs.getInt(1);
+            int newSpots = numParticipants + oldSpots;
+
+            String sql = "UPDATE dayTours SET spotsLeft = " + newSpots + " WHERE title = '" + tourName + "'";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+
+            sql = "DELETE FROM bookings WHERE username = '" + user + "' AND dayTourID = " + dayTourId + " AND numParticipants = " + numParticipants;
+            PreparedStatement pstmt2 = conn.prepareStatement(sql);
+            pstmt2.executeUpdate();
+
+        }catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     public void addComment(int dayTourId, String user, String comment, Date date){
@@ -230,7 +258,8 @@ public class Database {
 
     /*
     public static void main(String[] args) throws Exception {
-        addBooking("12", 5, "South Shore Adventure");
+        //addBooking("12", 5, "South Shore Adventure");
+        removeBooking("12", "South Shore Adventure");
     }
 
      */
