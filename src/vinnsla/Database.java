@@ -1,5 +1,6 @@
 package vinnsla;
 
+import javax.swing.plaf.nimbus.State;
 import javax.xml.transform.Result;
 import java.awt.*;
 import java.sql.*;
@@ -74,7 +75,7 @@ public class Database {
     }
 
     public static void addDayTour(String title, String description, String image, String date, int price, int maxSpots,
-                           int spotsLeft, String location, int duration,float rating) throws Exception {
+                           int spotsLeft, String location, int duration, float rating) throws Exception {
         getConnection();
 
         Statement s = conn.createStatement();
@@ -164,6 +165,38 @@ public class Database {
         }
     }
 
+    public static DayTour[] getDayToursByUserBooked(String user) throws ClassNotFoundException, SQLException {
+
+        ArrayList<DayTour> dayTourArray = null;
+        try {
+            getConnection();
+
+            Statement s = conn.createStatement();
+            String query = "SELECT dayTourID from bookings WHERE username ='" + user + "'";
+            ResultSet rs = s.executeQuery(query);
+
+            dayTourArray = new ArrayList<>();
+            while (rs.next()) {
+                Statement s2 = conn.createStatement();
+                query = "SELECT * from dayTours WHERE ID=" + rs.getInt(1);
+                ResultSet res = s2.executeQuery(query);
+                while (res.next()){
+                    String[] imgs = res.getString("Images").split(",");
+                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
+                    DayTour dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), imgs, date,
+                            res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
+                            res.getInt("Duration"), res.getFloat("Rating"));
+                    dayTourArray.add(dt);
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return dayTourArray.toArray(DayTour[]::new);
+    }
+
     public void addComment(int dayTourId, String user, String comment, Date date){
 
     }
@@ -222,45 +255,18 @@ public class Database {
     }
 
 
-    public static DayTour[] getDayToursByUserBooked(String user) throws ClassNotFoundException, SQLException {
-
-        ArrayList<DayTour> dayTourArray = null;
-        try {
-            getConnection();
-
-            Statement s = conn.createStatement();
-            String query = "SELECT dayTourID from bookings WHERE username ='" + user + "'";
-            ResultSet rs = s.executeQuery(query);
-
-            dayTourArray = new ArrayList<>();
-            while (rs.next()) {
-                query = "SELECT * from dayTours WHERE ID='" + rs.getInt(1) + "'";
-                ResultSet res = s.executeQuery(query);
-                while (res.next()){
-                    String[] imgs = res.getString("Images").split(",");
-                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
-                    DayTour dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), imgs, date,
-                            res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
-                            res.getInt("Duration"), res.getFloat("Rating"));
-                    dayTourArray.add(dt);
-                }
-            }
-            return dayTourArray.toArray(DayTour[]::new);
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        return dayTourArray.toArray(DayTour[]::new);
-    }
-
-
-    /*
     public static void main(String[] args) throws Exception {
-        //addBooking("12", 5, "South Shore Adventure");
-        removeBooking("12", "South Shore Adventure");
-    }
+        String title = "Super Jeep Tour";
+        String image = "https://adventures.is/media/102032/vatnajokull-super-jeep-tour-31.jpg";
+        String desc = "Travel by sturdy and comfortable Super Jeep high on Vatnajökull where the stunning beauty of Iceland's highest peaks will be all around you. Explore the heights of glorious Vatnajökull for a once in lifetime experience on the biggest icecap in Europe. On this thrilling Super Jeep adventure tour you will be taken up to 1400 meters above sea level on Vatnajökull, the mightiest glacier in Europe, which will rest beneath you. This a majestic and raw environment, its stunning beauty and impressive grandeur will make you, literally, run out of superlatives.";
+        String date = "08/07/2023";
+        int price = 22900;
+        int maxSpots = 20;
+        int spotsLeft = 20;
+        String location = "Austurland";
+        int duration = 5;
+        int rating = 5;
 
-     */
+        addDayTour(title, desc, image, date, price,maxSpots,spotsLeft,location,duration,rating);
+    }
 }

@@ -19,7 +19,7 @@
       </ImageView>
       <Label fx:id="title" layoutX="333.0" prefHeight="58.0" prefWidth="564.0" text="Nafn á dagsferð">
          <font>
-            <Font size="36.0" />
+            <Font size="30.0" />
          </font>
          <padding>
             <Insets top="5.0" />
@@ -61,6 +61,6 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="517.0" layoutY="242.0" mnemonicParsing="false" onAction="#bookTour" prefHeight="41.0" prefWidth="116.0" text="Order trip" />
+      <Button layoutX="517.0" layoutY="242.0" mnemonicParsing="false" onAction="#bookTour" prefHeight="41.0" prefWidth="116.0" text="Bóka ferð" />
    </children>
 </fx:root>

@@ -12,10 +12,13 @@ import vinnsla.Database;
 import vinnsla.DayTour;
 import vinnsla.User;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 public class DayTourOverviewController {
     @FXML private VBox vbox;
+    @FXML private TextField tourName;
     @FXML private Button goBackButton;
     private static String user = User.getUsername();
 
@@ -28,13 +31,28 @@ public class DayTourOverviewController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         if(dayTours == null) return;
 
-        vbox.getChildren().clear(); // fjarlægjum allar dagsferðir áður en við birtum þær
+        vbox.getChildren().clear();
         for(DayTour dt : dayTours){
             DayTourListing dtListing = new DayTourListing(dt.getTourTitle(), dt.getDesc(), dt.getPrice(), dt.getSpotsLeft(), dt.getFrontImage(), dt.getDate(), dt.getLocation(), dt.getRating());
             vbox.getChildren().add(dtListing);
         }
+    }
+
+    public void removeBooking() throws IOException {
+        Database.removeBooking(user, tourName.getText());
+        Stage primaryStage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
+        primaryStage.setTitle("Day Trip Search");
+        primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 800));
+        primaryStage.setMinWidth(1100);
+        primaryStage.show();
+
+        Stage stage = (Stage) goBackButton.getScene().getWindow();
+        stage.close();
+
     }
 
 

@@ -82,7 +82,7 @@ public class DayToursController implements Initializable {
         DayTourOverviewController cont = fxmlLoader.getController();
         cont.showBookedDayTours();
         Stage stage = (Stage)((Node)ae.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1070, 752);
+        Scene scene = new Scene(root, 1058, 800);
         stage.setScene(scene);
         stage.show();
     }
