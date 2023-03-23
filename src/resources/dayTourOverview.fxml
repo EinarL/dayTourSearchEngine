@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1058.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.DayTourOverviewController">
+<AnchorPane maxHeight="1.7976931348623157E308" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.DayTourOverviewController">
    <children>
       <Label layoutX="14.0" layoutY="22.0" prefHeight="53.0" prefWidth="331.0" text="Bókaðar dagsferðir:">
          <font>
