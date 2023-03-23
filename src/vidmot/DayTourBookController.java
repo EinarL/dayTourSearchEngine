@@ -3,6 +3,8 @@ package vidmot;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -15,6 +17,7 @@ import vinnsla.User;
 
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.util.Objects;
 
 /**
  * Þessi klasi er controller fyrir bookDayTour.fmxl.
@@ -55,33 +58,19 @@ public class DayTourBookController {
     }
 
     public void bookTour() throws InterruptedException, IOException {
-        int num = Integer.valueOf(numPeople.getText());
+        int num = Integer.parseInt(numPeople.getText());
         Database.addBooking(user, num, title.getText());
         message.setText("Bókun staðfest, góða skemmtun!");
 
         sleep();
-        Stage primaryStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
-        primaryStage.setTitle("Day Trip Search");
-        primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 800));
-        primaryStage.setMinWidth(1100);
-        primaryStage.show();
-
-        Stage stage = (Stage) bookTourButton.getScene().getWindow();
-        stage.close();
+        goBack();
     }
 
 
     public void goBack() throws IOException {
-        Stage primaryStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
-        primaryStage.setTitle("Day Trip Search");
-        primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 800));
-        primaryStage.setMinWidth(1100);
-        primaryStage.show();
-
-        Stage stage = (Stage) goBackButton.getScene().getWindow();
-        stage.close();
+        Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/dayTours.fxml")));
+        Scene scene = title.getScene();
+        scene.setRoot(newRoot);
     }
 
     public void confirm(){

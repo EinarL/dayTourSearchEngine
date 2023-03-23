@@ -22,6 +22,7 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DayToursController implements Initializable {
@@ -54,7 +55,6 @@ public class DayToursController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("User is: " + User.getUsername());
     }
 
     /**
@@ -77,13 +77,14 @@ public class DayToursController implements Initializable {
     }
 
     public void goToOverview(ActionEvent ae) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTourOverview.fxml"));
-        Parent root = fxmlLoader.load();
-        DayTourOverviewController cont = fxmlLoader.getController();
+
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/dayTourOverview.fxml")));
+        Parent newRoot = loader.load();
+        Scene scene = ((Node) ae.getSource()).getScene();
+
+        DayTourOverviewController cont = loader.getController();
         cont.showBookedDayTours();
-        Stage stage = (Stage)((Node)ae.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1058, 800);
-        stage.setScene(scene);
-        stage.show();
+        scene.setRoot(newRoot);
+
     }
 }

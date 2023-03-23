@@ -19,6 +19,7 @@ import vinnsla.DayTour;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 
 /**
@@ -89,14 +90,13 @@ public class DayTourListing extends AnchorPane {
     }
 
     public void bookTour(ActionEvent ae) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/bookDayTour.fxml"));
-        Parent root = fxmlLoader.load();
-        DayTourBookController cont = fxmlLoader.getController();
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/bookDayTour.fxml")));
+        Parent newRoot = loader.load();
+        Scene scene = ((Node) ae.getSource()).getScene();
+
+        DayTourBookController cont = loader.getController();
         cont.setTourInfo(title.getText(), date.getText(), spotsLeft.getText(), area.getText(), desc.getText(), image, starImg, spotsl);
-        Stage stage = (Stage)((Node)ae.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 997, 605);
-        stage.setScene(scene);
-        stage.show();
+        scene.setRoot(newRoot);
     }
 
 }

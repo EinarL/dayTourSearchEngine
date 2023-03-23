@@ -2,6 +2,8 @@ package vidmot;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -15,6 +17,7 @@ import vinnsla.User;
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.sql.SQLOutput;
+import java.util.Objects;
 
 public class DayTourOverviewController {
     @FXML private VBox vbox;
@@ -41,33 +44,15 @@ public class DayTourOverviewController {
         }
     }
 
-    public void removeBooking() throws IOException {
+    public void removeBooking() {
         Database.removeBooking(user, tourName.getText());
-        Stage primaryStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
-        primaryStage.setTitle("Day Trip Search");
-        primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 800));
-        primaryStage.setMinWidth(1100);
-        primaryStage.show();
-
-        Stage stage = (Stage) goBackButton.getScene().getWindow();
-        stage.close();
-
     }
 
 
     public void goBack() throws IOException {
-        Stage primaryStage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
-        primaryStage.setTitle("Day Trip Search");
-        primaryStage.setScene(new Scene(fxmlLoader.load(), 1200, 800));
-        primaryStage.setMinWidth(1100);
-        primaryStage.show();
-
-        Stage stage = (Stage) goBackButton.getScene().getWindow();
-        stage.close();
+        Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/dayTours.fxml")));
+        Scene scene = vbox.getScene();
+        scene.setRoot(newRoot);
     }
-
-
 
 }
