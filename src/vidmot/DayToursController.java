@@ -74,6 +74,16 @@ public class DayToursController implements Initializable {
             DayTourListing dtListing = new DayTourListing(dt.getTourTitle(), dt.getDesc(), dt.getPrice(), dt.getSpotsLeft(), dt.getFrontImage(), dt.getDate(), dt.getLocation(), dt.getRating());
             dayTourWindow.getChildren().add(dtListing);
         }
+    }
 
+    public void goToOverview(ActionEvent ae) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTourOverview.fxml"));
+        Parent root = fxmlLoader.load();
+        DayTourOverviewController cont = fxmlLoader.getController();
+        cont.showBookedDayTours();
+        Stage stage = (Stage)((Node)ae.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1070, 752);
+        stage.setScene(scene);
+        stage.show();
     }
 }

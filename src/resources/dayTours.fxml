@@ -15,13 +15,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="gridPane" accessibleRole="COMBO_BOX" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.DayToursController">
+<GridPane fx:id="gridPane" accessibleRole="COMBO_BOX" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.DayToursController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="204.0" minWidth="204.0" prefWidth="204.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="600.0" />
-    <ColumnConstraints hgrow="NEVER" maxWidth="226.0" minWidth="204.0" prefWidth="225.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="62.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="458.8181756642245" />
+    <ColumnConstraints hgrow="NEVER" maxWidth="377.0182169865383" minWidth="204.0" prefWidth="221.6727675861962" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="214.69085364475723" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="96.0" minHeight="96.0" prefHeight="96.0" valignment="CENTER" vgrow="NEVER" />
@@ -82,6 +82,11 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+      </Button>
+      <Button mnemonicParsing="false" onAction="#goToOverview" prefHeight="45.0" prefWidth="141.0" text="Yfirlit" GridPane.columnIndex="4">
+         <GridPane.margin>
+            <Insets left="2.0" top="15.0" />
+         </GridPane.margin>
       </Button>
    </children>
 </GridPane>

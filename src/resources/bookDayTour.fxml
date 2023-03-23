@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
@@ -71,12 +72,20 @@
       <TextField fx:id="email" layoutX="813.0" layoutY="128.0" />
       <TextField fx:id="phonen" layoutX="813.0" layoutY="172.0" />
       <TextField fx:id="numPeople" layoutX="813.0" layoutY="217.0" />
-      <Button layoutX="719.0" layoutY="304.0" mnemonicParsing="false" onAction="#confirm" prefHeight="47.0" prefWidth="152.0" text="Staðfesta upplýsingar" />
-      <Label fx:id="message" alignment="TOP_LEFT" layoutX="628.0" layoutY="369.0" prefHeight="113.0" prefWidth="349.0" text="Skilaboð" wrapText="true">
+      <Button layoutX="719.0" layoutY="341.0" mnemonicParsing="false" onAction="#confirm" prefHeight="47.0" prefWidth="152.0" text="Staðfesta upplýsingar" />
+      <Label fx:id="message" alignment="TOP_LEFT" layoutX="628.0" layoutY="409.0" prefHeight="113.0" prefWidth="349.0" text="Skilaboð" wrapText="true">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
       <ImageView fx:id="starlmg" fitHeight="47.0" fitWidth="247.0" layoutX="375.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true" style="-fx-blend-mode: MULTIPLY;" />
+      <Label layoutX="635.0" layoutY="271.0" prefHeight="36.0" prefWidth="151.0" text="Greiðslumáti:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <CheckBox layoutX="814.0" layoutY="262.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="87.0" text="Millifærsla" />
+      <CheckBox layoutX="814.0" layoutY="280.0" mnemonicParsing="false" text="Aur" />
+      <CheckBox layoutX="814.0" layoutY="299.0" mnemonicParsing="false" text="VISA" />
    </children>
 </AnchorPane>
