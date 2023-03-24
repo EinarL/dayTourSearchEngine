@@ -146,7 +146,7 @@
     <option name="sortByType" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../Program Files/Java/jdk-19" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../hamcrest-all-1.3.jar" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -261,6 +261,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DayTourControllerTest.testShowDayTours" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="dayTourSearchEngine" />
+      <option name="PACKAGE_NAME" value="verkefni4" />
+      <option name="MAIN_CLASS_NAME" value="verkefni4.DayTourControllerTest" />
+      <option name="METHOD_NAME" value="testShowDayTours" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -275,10 +289,12 @@
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.Database" />
       <item itemvalue="Application.DayToursApplication" />
+      <item itemvalue="JUnit.DayTourControllerTest.testShowDayTours" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.DayToursApplication" />
+        <item itemvalue="JUnit.DayTourControllerTest.testShowDayTours" />
         <item itemvalue="Application.Database" />
       </list>
     </recent_temporary>

@@ -38,7 +38,7 @@ public class Database {
      *             getur verið: "Allt land","Vesturland","Norðurland","Suðurland" eða "Austurland",
      *             ef það er "Allt land", þá skilar aðferðin öllum dagsferðum.
      * @param search leitarstrengur fyrir Title í dagsferð.
-     * @param order Strengur sem segir til um hvort á að raða eftir Einkunn eða Stafrófsröð.
+     * @param order Strengur sem segir til um hvort á að raða eftir Einkunn eða Stafrófsröð eða Verði.
      * @return skilar lista af dagsferðum.
      */
     public static DayTour[] getDayTours(String area, String search, String order) throws Exception{
