@@ -46,6 +46,7 @@ public class DayTourOverviewController {
 
     public void removeBooking() {
         Database.removeBooking(user, tourName.getText());
+        showBookedDayTours();
     }
 
 

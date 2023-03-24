@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import vinnsla.DayTour;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -35,7 +37,6 @@ public class DayTourListing extends AnchorPane {
     @FXML private Label date;
     @FXML private Label area; // landssvæði
     @FXML private ImageView starImg;
-    private static int spotsl;
 
     public DayTourListing(String title, String desc, int price, int spotsLeft, String image, Date date, String area, float rating) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/dayTourListing.fxml"));
@@ -53,7 +54,6 @@ public class DayTourListing extends AnchorPane {
         this.image.setImage(new Image(image));
         this.date.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
         this.area.setText(area);
-        spotsl = spotsLeft;
 
         // rounded corners on image:
         final Rectangle clip = new Rectangle();
@@ -89,13 +89,13 @@ public class DayTourListing extends AnchorPane {
         return group;
     }
 
-    public void bookTour(ActionEvent ae) throws IOException {
+    public void bookTour(ActionEvent ae) throws IOException, SQLException, ParseException, ClassNotFoundException {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/bookDayTour.fxml")));
         Parent newRoot = loader.load();
         Scene scene = ((Node) ae.getSource()).getScene();
 
         DayTourBookController cont = loader.getController();
-        cont.setTourInfo(title.getText(), date.getText(), spotsLeft.getText(), area.getText(), desc.getText(), image, starImg, spotsl);
+        cont.setTourInfo(title.getText());
         scene.setRoot(newRoot);
     }
 

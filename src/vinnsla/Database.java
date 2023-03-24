@@ -197,6 +197,22 @@ public class Database {
         return dayTourArray.toArray(DayTour[]::new);
     }
 
+    public static DayTour getDayTourByTitle(String title) throws ClassNotFoundException, SQLException, ParseException {
+        getConnection();
+        Statement s = conn.createStatement();
+        String query = "SELECT * from dayTours WHERE title = '" + title + "'";
+        ResultSet res = s.executeQuery(query);
+        DayTour dt = null;
+        while(res.next()){
+            String[] imgs = res.getString("Images").split(",");
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
+            dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), imgs, date,
+                    res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
+                    res.getInt("Duration"), res.getFloat("Rating"));
+        }
+        return dt;
+    }
+
     public void addComment(int dayTourId, String user, String comment, Date date){
 
     }
@@ -252,21 +268,5 @@ public class Database {
         }
         System.err.println("Villa í doesUserExist() fallinu í Database");
         return false;
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        String title = "Super Jeep Tour";
-        String image = "https://adventures.is/media/102032/vatnajokull-super-jeep-tour-31.jpg";
-        String desc = "Travel by sturdy and comfortable Super Jeep high on Vatnajökull where the stunning beauty of Iceland's highest peaks will be all around you. Explore the heights of glorious Vatnajökull for a once in lifetime experience on the biggest icecap in Europe. On this thrilling Super Jeep adventure tour you will be taken up to 1400 meters above sea level on Vatnajökull, the mightiest glacier in Europe, which will rest beneath you. This a majestic and raw environment, its stunning beauty and impressive grandeur will make you, literally, run out of superlatives.";
-        String date = "08/07/2023";
-        int price = 22900;
-        int maxSpots = 20;
-        int spotsLeft = 20;
-        String location = "Austurland";
-        int duration = 5;
-        int rating = 5;
-
-        addDayTour(title, desc, image, date, price,maxSpots,spotsLeft,location,duration,rating);
     }
 }

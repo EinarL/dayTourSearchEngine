@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.DayTourOverviewController">
+<AnchorPane maxHeight="1.7976931348623157E308" prefHeight="900.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.DayTourOverviewController">
    <children>
       <Label layoutX="14.0" layoutY="22.0" prefHeight="53.0" prefWidth="331.0" text="Bókaðar dagsferðir:">
          <font>
@@ -16,9 +16,9 @@
          </font>
       </Label>
       <Button fx:id="goBackButton" layoutX="901.0" layoutY="714.0" mnemonicParsing="false" onAction="#goBack" prefHeight="53.0" prefWidth="126.0" text="Til baka" />
-      <ScrollPane layoutX="11.0" layoutY="78.0" prefHeight="559.0" prefWidth="1016.0">
+      <ScrollPane layoutX="11.0" layoutY="78.0" prefHeight="559.0" prefWidth="1092.0">
          <content>
-            <VBox fx:id="vbox" prefHeight="549.0" prefWidth="1000.0" />
+            <VBox fx:id="vbox" prefHeight="552.0" prefWidth="1025.0" />
          </content>
       </ScrollPane>
       <Label layoutX="51.0" layoutY="678.0" prefHeight="17.0" prefWidth="184.0" text="Hætta við bókun:">
