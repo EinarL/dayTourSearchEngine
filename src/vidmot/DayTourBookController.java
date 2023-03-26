@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import vinnsla.Database;
+import vinnsla.DayTourRepository;
 import vinnsla.DayTour;
 import vinnsla.User;
 
@@ -48,7 +48,7 @@ public class DayTourBookController {
 
     public void setTourInfo(String title) throws SQLException, ParseException, ClassNotFoundException {
 
-        DayTour dt = Database.getDayTourByTitle(title);
+        DayTour dt = DayTourRepository.getDayTourByTitle(title);
         DayTourListing dtls = new DayTourListing(dt.getTourTitle(), dt.getDesc(), dt.getPrice(), dt.getSpotsLeft(), dt.getFrontImage(), dt.getDate(), dt.getLocation(), dt.getRating());
         dayTourVBox.getChildren().clear();
         dayTourVBox.getChildren().add(dtls);
@@ -65,7 +65,7 @@ public class DayTourBookController {
     public void bookTour() throws InterruptedException, IOException {
 
         int num = Integer.parseInt(numPeople.getText());
-        Database.addBooking(user, num, dtTitle);
+        DayTourRepository.addBooking(user, num, dtTitle);
         message.setText("Bókun staðfest, góða skemmtun!");
         sleep();
         goBack();

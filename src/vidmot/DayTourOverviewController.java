@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import vinnsla.Database;
+import vinnsla.DayTourRepository;
 import vinnsla.DayTour;
 import vinnsla.User;
 
@@ -25,7 +25,7 @@ public class DayTourOverviewController {
     public void showBookedDayTours(){
         DayTour[] dayTours = null;
         try {
-            dayTours = Database.getDayToursByUserBooked(user);
+            dayTours = DayTourRepository.getDayToursByUserBooked(user);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class DayTourOverviewController {
     }
 
     public void removeBooking() {
-        Database.removeBooking(user, tourName.getText());
+        DayTourRepository.removeBooking(user, tourName.getText());
         showBookedDayTours();
     }
 

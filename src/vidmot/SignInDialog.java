@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Border;
 import javafx.stage.Stage;
-import vinnsla.Database;
+import vinnsla.DayTourRepository;
 import vinnsla.User;
 
 import java.io.IOException;
@@ -78,7 +78,7 @@ public class SignInDialog {
      */
     public void signIn() throws Exception {
         if(isSigningIn){
-            if(Database.doesUserExist(usernameField.getText(), passwordField.getText())){
+            if(DayTourRepository.doesUserExist(usernameField.getText(), passwordField.getText())){
                 // geymum usernameið í User klasanum svo við vitum hver er signaður inn.
                 User.setUsername(usernameField.getText());
 
@@ -94,7 +94,7 @@ public class SignInDialog {
                 errorText.setVisible(true);
                 return;
             }
-            if(Database.doesUserExist(usernameField.getText())){
+            if(DayTourRepository.doesUserExist(usernameField.getText())){
                 errorText.setText("username already exists!");
                 errorText.setVisible(true);
             }else{ // ef usernameið er laust
@@ -102,7 +102,7 @@ public class SignInDialog {
                 User.setUsername(usernameField.getText());
 
                 // bætum við notendanum í databaseinn
-                Database.addUser(usernameField.getText(), passwordField.getText());
+                DayTourRepository.addUser(usernameField.getText(), passwordField.getText());
 
                 showMainWindow();
             }

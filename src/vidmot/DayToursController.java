@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import vinnsla.Database;
+import vinnsla.DayTourRepository;
 import vinnsla.DayTour;
 
 import javafx.event.ActionEvent;
@@ -58,7 +58,7 @@ public class DayToursController implements Initializable {
     public void showDayTours() throws IOException {
         DayTour[] dayTours = null;
         try {
-            dayTours = Database.getDayTours(areaDropdown.getValue(), searchBar.getText(), sortDropdown.getValue());
+            dayTours = DayTourRepository.getDayTours(areaDropdown.getValue(), searchBar.getText(), sortDropdown.getValue());
         } catch (Exception e) {
             e.printStackTrace();
         }

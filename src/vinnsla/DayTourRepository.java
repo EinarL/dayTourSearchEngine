@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Database {
+public class DayTourRepository {
 
     private static Connection conn = null;
 
