@@ -1,28 +1,22 @@
 package vidmot;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.w3c.dom.Text;
 import vinnsla.Database;
 import vinnsla.DayTour;
 import vinnsla.User;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.Objects;
 
 /**

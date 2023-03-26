@@ -2,21 +2,16 @@ package vidmot;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import vinnsla.Database;
 import vinnsla.DayTour;
 import vinnsla.User;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Objects;
 
 public class DayTourOverviewController {

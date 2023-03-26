@@ -1,6 +1,5 @@
 package vidmot;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -8,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Border;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import vinnsla.Database;
 import vinnsla.User;
 

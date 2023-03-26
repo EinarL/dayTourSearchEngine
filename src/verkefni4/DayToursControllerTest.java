@@ -1,23 +1,34 @@
 package verkefni4;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
-import vinnsla.MockDatabase;
+import vinnsla.Booking;
 import vinnsla.DayTour;
 
 public class DayToursControllerTest {
 
-    private MockDatabase mD;
+    private DayTourRepositoryMock mD;
+    private DayTour[] dayTours;
+    private TestingController testingController;
 
     @Before
     public void setUp(){
-        mD = new MockDatabase();
+        mD = new DayTourRepositoryMock();
+        testingController = new TestingController(mD);
+    }
+
+    @After
+    public void tearDown() {
+        mD = null;
+        dayTours = null;
+        testingController = null;
     }
 
     @Test
     public void testEinkunn() throws Exception {
-        DayTour[] dayTours = mD.getDayTours("Allt land", "", "Einkunn");
+        dayTours = testingController.showDayTours("Allt land", "", "Einkunn");
         Assert.assertNotNull(dayTours);
 
         float prevRating = 5;
@@ -34,7 +45,7 @@ public class DayToursControllerTest {
     @Test
     public void testVerd() throws Exception {
         // sortar eftir verði, ódýrasta fyrst
-        DayTour[] dayTours = mD.getDayTours("Allt land", "", "Verð");
+        dayTours = testingController.showDayTours("Allt land", "", "Verð");
         Assert.assertNotNull(dayTours);
 
         int prevPrice = 0;
@@ -49,7 +60,7 @@ public class DayToursControllerTest {
 
     @Test
     public void testStafrof() throws Exception {
-        DayTour[] dayTours = mD.getDayTours("Allt land", "", "Stafrófsröð");
+        dayTours = testingController.showDayTours("Allt land", "", "Stafrófsröð");
         Assert.assertNotNull(dayTours);
 
         // ef lengdin á listanum er minni en 2, þá er hann í stafrófsröð
@@ -64,21 +75,41 @@ public class DayToursControllerTest {
 
     @Test
     public void testSearch() throws Exception {
-        DayTour[] dayTours = mD.getDayTours("Allt land", "ABC", "Stafrófsröð");
+        dayTours = testingController.showDayTours("Allt land", "ABC", "Stafrófsröð");
         Assert.assertNotNull(dayTours);
 
-        for(int i = 0; i < dayTours.length; i++) {
-            Assert.assertTrue(dayTours[i].getTourTitle().contains("ABC"));
+        for (DayTour dayTour : dayTours) {
+            Assert.assertTrue(dayTour.getTourTitle().contains("ABC"));
         }
     }
 
     @Test
     public void testVesturland() throws Exception {
-        DayTour[] dayTours = mD.getDayTours("Vesturland", "", "Stafrófsröð");
+        dayTours = testingController.showDayTours("Vesturland", "", "Stafrófsröð");
         Assert.assertNotNull(dayTours);
 
-        for(int i = 0; i < dayTours.length; i++) {
-            Assert.assertTrue(dayTours[i].getLocation().equals("Vesturland"));
+        for (DayTour dayTour : dayTours) {
+            Assert.assertEquals("Vesturland", dayTour.getLocation());
         }
+    }
+
+    @Test
+    public void testAddBooking() throws Exception {
+        String user = "Jón";
+        int tourID = 15;
+        int numPeople = 4;
+        Booking b = new Booking(user, tourID, numPeople);
+        testingController.addBooking(b);
+        Assert.assertSame(b, mD.getBooking(user, tourID));
+    }
+
+    @Test
+    public void testRemoveBooking() throws Exception {
+        String user = "Sigga";
+        int tourID = 2;
+        int numPeople = 6;
+        Booking b = new Booking(user, tourID, numPeople);
+        testingController.removeBooking(b);
+        Assert.assertNull(mD.getBooking(user, tourID));
     }
 }
