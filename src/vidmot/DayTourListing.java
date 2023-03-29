@@ -90,7 +90,7 @@ public class DayTourListing extends AnchorPane {
     }
 
     public void bookTour() throws Exception {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/dayTourSite2.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/dayTourSite.fxml")));
         Parent newRoot = loader.load();
 
         Scene scene = title.getScene();

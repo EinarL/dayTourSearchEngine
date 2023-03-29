@@ -213,6 +213,16 @@ public class DayTourRepository {
         return dt;
     }
 
+    public static boolean hasUserBookedDayTour(int tourID) throws Exception {
+        getConnection();
+        Statement s = conn.createStatement();
+
+        String query = "SELECT * from bookings WHERE username = '" + User.getUsername() + "' AND dayTourID = '" + tourID + "'";
+        ResultSet res = s.executeQuery(query);
+
+        return res.next();
+    }
+
     public void addComment(int dayTourId, String user, String comment, Date date){
 
     }

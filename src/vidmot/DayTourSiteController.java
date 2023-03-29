@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +21,7 @@ import java.util.Objects;
 public class DayTourSiteController {
     @FXML private Label title;
     @FXML private Label desc;
+    @FXML private Button bookButton;
     @FXML private Label price;
     @FXML private Label date;
     @FXML private Label spotsLeft;
@@ -27,10 +29,11 @@ public class DayTourSiteController {
     @FXML private Label duration;
     @FXML private ImageView dtImages;
     @FXML private ImageView starImg;
+    private DayTour dt;
     private String[] images;
 
     public void setTourInfo(String title) throws Exception {
-        DayTour dt = DayTourRepository.getDayTourByTitle(title);
+        dt = DayTourRepository.getDayTourByTitle(title);
 
         this.title.setText(title);
         this.desc.setText(dt.getDesc());
@@ -41,6 +44,11 @@ public class DayTourSiteController {
         this.area.setText("Location: " + dt.getLocation());
 
         this.images = dt.getImages();
+
+        // ef notandi hefur bókað ferðina, þá getur hann ekki bókað hana aftur
+        if(DayTourRepository.hasUserBookedDayTour(dt.getId())){
+            bookButton.setDisable(true);
+        }
 
         String ratingStr;
         float rating = dt.getRating();
@@ -59,6 +67,29 @@ public class DayTourSiteController {
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/dayTours.fxml")));
         Scene scene = title.getScene();
         scene.setRoot(newRoot);
+    }
+
+    /**
+     * Þegar notandi ýtir á Book Trip takkann, þá birtir þetta fall dialog gluggann.
+     */
+    public void bookTour() throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/bookTourDialog.fxml"));
+        Parent parent = fxmlLoader.load();
+        Stage dialogStage = new Stage();
+        Scene dialogScene = new Scene(parent, 600,370);
+        dialogStage.setScene(dialogScene);
+        dialogStage.setResizable(false);
+        BookTourDialog cont = fxmlLoader.getController();
+        cont.show(dt);
+
+        dialogStage.showAndWait();
+
+        // uppfærum upplýsingar eftir að notandinn lokar dialognum.
+        if(DayTourRepository.hasUserBookedDayTour(dt.getId())){
+            bookButton.setDisable(true);
+        }
+        dt = DayTourRepository.getDayTourByTitle(dt.getTourTitle());
+        spotsLeft.setText(dt.getSpotsLeft() + "/" + dt.getMaxSpots() + " seats left");
     }
 
     public void nextImage(){

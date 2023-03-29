@@ -20,11 +20,7 @@ import java.util.Objects;
 
 public class DayTourOverviewController {
     @FXML private VBox vbox;
-    @FXML private TextField tourName;
-    @FXML private Button goBackButton;
     private static String user = User.getUsername();
-
-
 
     public void showBookedDayTours(){
 
