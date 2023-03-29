@@ -89,14 +89,15 @@ public class DayTourListing extends AnchorPane {
         return group;
     }
 
-    public void bookTour(ActionEvent ae) throws IOException, SQLException, ParseException, ClassNotFoundException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/bookDayTour.fxml")));
+    public void bookTour() throws Exception {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/dayTourSite2.fxml")));
         Parent newRoot = loader.load();
-        Scene scene = ((Node) ae.getSource()).getScene();
 
-        DayTourBookController cont = loader.getController();
-        cont.setTourInfo(title.getText());
+        Scene scene = title.getScene();
+
+        DayTourSiteController cont = loader.getController();
         scene.setRoot(newRoot);
+        cont.setTourInfo(title.getText());
     }
 
 }
