@@ -1,5 +1,7 @@
 package vinnsla;
 
+import javafx.scene.image.Image;
+
 import javax.swing.plaf.nimbus.State;
 import javax.xml.transform.Result;
 import java.awt.*;
@@ -64,8 +66,12 @@ public class DayTourRepository {
         ArrayList<DayTour> dayTourArray = new ArrayList<>();
         while(res.next()){
             String[] imgs = res.getString("images").split(",");
+            Image[] images = new Image[imgs.length];
+            for(int i = 0; i < images.length; i++){
+                images[i] = new Image(imgs[i]);
+            }
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
-            DayTour dt = new DayTour(res.getInt("ID"),res.getString("Title"), res.getString("Description"), imgs, date,
+            DayTour dt = new DayTour(res.getInt("ID"),res.getString("Title"), res.getString("Description"), images, date,
                                     res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
                                     res.getInt("Duration"), res.getFloat("Rating"));
             dayTourArray.add(dt);
@@ -181,9 +187,13 @@ public class DayTourRepository {
                 query = "SELECT * from dayTours WHERE ID=" + rs.getInt(1);
                 ResultSet res = s2.executeQuery(query);
                 while (res.next()){
-                    String[] imgs = res.getString("Images").split(",");
+                    String[] imgs = res.getString("images").split(",");
+                    Image[] images = new Image[imgs.length];
+                    for(int i = 0; i < images.length; i++){
+                        images[i] = new Image(imgs[i]);
+                    }
                     Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
-                    DayTour dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), imgs, date,
+                    DayTour dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), images, date,
                             res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
                             res.getInt("Duration"), res.getFloat("Rating"));
                     dayTourArray.add(dt);
@@ -204,9 +214,13 @@ public class DayTourRepository {
         ResultSet res = s.executeQuery(query);
         DayTour dt = null;
         while(res.next()){
-            String[] imgs = res.getString("Images").split(",");
+            String[] imgs = res.getString("images").split(",");
+            Image[] images = new Image[imgs.length];
+            for(int i = 0; i < images.length; i++){
+                images[i] = new Image(imgs[i], 588, 444, false, false); // breidd og hæð á myndinni
+            }
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
-            dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), imgs, date,
+            dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), images, date,
                     res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
                     res.getInt("Duration"), res.getFloat("Rating"));
         }

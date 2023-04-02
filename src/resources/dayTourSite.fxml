@@ -14,7 +14,7 @@
    <children>
       <AnchorPane maxWidth="-Infinity" prefHeight="900.0" prefWidth="1200.0" scaleShape="false">
          <children>
-            <ImageView fx:id="dtImages" fitHeight="444.0" fitWidth="588.0" layoutX="14.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="dtImages" fitHeight="444.0" fitWidth="588.0" layoutX="14.0" layoutY="67.0" pickOnBounds="true" AnchorPane.bottomAnchor="389.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="598.0" AnchorPane.topAnchor="67.0">
                <viewport>
                   <Rectangle2D height="444.0" width="588.0" />
                </viewport>

@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class DayTourOverviewController {
     @FXML private VBox vbox;
-    private static String user = User.getUsername();
+    private static final String user = User.getUsername();
 
     public void showBookedDayTours(){
 
