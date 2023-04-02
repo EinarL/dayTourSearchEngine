@@ -38,7 +38,7 @@ public class DayTourListing extends AnchorPane {
     @FXML private Label area; // landssvæði
     @FXML private ImageView starImg;
 
-    public DayTourListing(String title, String desc, int price, int spotsLeft, String image, Date date, String area, float rating) {
+    public DayTourListing(String title, String desc, int price, int spotsLeft, Image image, Date date, String area, float rating) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/dayTourListing.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -51,7 +51,7 @@ public class DayTourListing extends AnchorPane {
         this.desc.setText(desc);
         this.price.setText(price + "kr.");
         this.spotsLeft.setText(spotsLeft + " pláss eftir");
-        this.image.setImage(new Image(image));
+        this.image.setImage(image);
         this.date.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
         this.area.setText(area);
 

@@ -1,6 +1,8 @@
 package vinnsla;
 
 
+import javafx.scene.image.Image;
+
 import java.util.Date;
 
 /**
@@ -12,7 +14,7 @@ public class DayTour{
     private int ID;
     private String tourTitle;
     private String desc;
-    private String[] images;
+    private Image[] images;
     private Date date;
     private int price;
     private int maxSpots;
@@ -21,7 +23,7 @@ public class DayTour{
     private int duration;
     private float rating;
 
-    public DayTour(int ID, String tourTitle, String desc, String[] images, Date date, int price,
+    public DayTour(int ID, String tourTitle, String desc, Image[] images, Date date, int price,
                    int maxSpots, int spotsLeft, String location, int duration, float rating){
         this.ID = ID;
         this.tourTitle = tourTitle;
@@ -34,6 +36,8 @@ public class DayTour{
         this.location = location;
         this.duration = duration;
         this.rating = rating;
+
+
     }
 
     public String getTourTitle(){
@@ -70,11 +74,11 @@ public class DayTour{
         return rating;
     }
 
-    public String[] getImages() {
+    public Image[] getImages() {
         return images;
     }
 
-    public String getFrontImage(){
+    public Image getFrontImage(){
         if (images.length > 0)
             return images[0];
         return null;

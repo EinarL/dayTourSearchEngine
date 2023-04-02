@@ -18,6 +18,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
+/**
+ * Controller fyrir dayTourSite.fxml
+ * þessi birta er fyrir hvert instance af dayTour, það er hægt að sjá ítarlegri upplýsingar
+ * um dagsferðina á þessari síðu.
+ * Þessi síða birtist þegar það er ýtt á einhverja dagsferð.
+ */
 public class DayTourSiteController {
     @FXML private Label title;
     @FXML private Label desc;
@@ -30,7 +36,8 @@ public class DayTourSiteController {
     @FXML private ImageView dtImages;
     @FXML private ImageView starImg;
     private DayTour dt;
-    private String[] images;
+    private Image[] images;
+    private int imagePointer = 0;
 
     public void setTourInfo(String title) throws Exception {
         dt = DayTourRepository.getDayTourByTitle(title);
@@ -39,11 +46,12 @@ public class DayTourSiteController {
         this.desc.setText(dt.getDesc());
         this.price.setText(dt.getPrice() + "kr.");
         this.spotsLeft.setText(dt.getSpotsLeft() + "/" + dt.getMaxSpots() + " seats left");
-        this.dtImages.setImage(new Image(dt.getFrontImage()));
+        this.dtImages.setImage(dt.getFrontImage());
         this.date.setText("Date: " + (new SimpleDateFormat("dd/MM/yyyy").format(dt.getDate())));
         this.area.setText("Location: " + dt.getLocation());
 
         this.images = dt.getImages();
+
 
         // ef notandi hefur bókað ferðina, þá getur hann ekki bókað hana aftur
         if(DayTourRepository.hasUserBookedDayTour(dt.getId())){
@@ -93,9 +101,15 @@ public class DayTourSiteController {
     }
 
     public void nextImage(){
-
+        if(imagePointer < images.length - 1){
+            imagePointer++;
+            dtImages.setImage(images[imagePointer]);
+        }
     }
     public void previousImage(){
-
+        if(imagePointer > 0){
+            imagePointer--;
+            dtImages.setImage(images[imagePointer]);
+        }
     }
 }
