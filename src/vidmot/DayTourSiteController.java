@@ -6,16 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vinnsla.Comment;
 import vinnsla.DayTour;
 import vinnsla.DayTourRepository;
 import vinnsla.User;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -35,6 +39,7 @@ public class DayTourSiteController {
     @FXML private Label duration;
     @FXML private ImageView dtImages;
     @FXML private ImageView starImg;
+    @FXML private VBox commentPane;
     private DayTour dt;
     private Image[] images;
     private int imagePointer = 0;
@@ -69,6 +74,14 @@ public class DayTourSiteController {
 
         String ratingNoDots = ratingStr.replace(".","");
         this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
+
+        Comment[] comments = DayTourRepository.getCommentsByTour(dt.getId());
+
+        for(Comment cmt : comments){
+            CommentView cmtView = new CommentView(cmt.getCommentID(), cmt.getUserCommented(), cmt.getDate(), cmt.getCommentText(), cmt.getLikes());
+            commentPane.getChildren().add(cmtView);
+        }
+
     }
 
     public void goBack() throws IOException {

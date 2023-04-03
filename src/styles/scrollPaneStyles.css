@@ -1,0 +1,11 @@
+.scroll-bar .increment-button{
+    -fx-padding: 0.60em; /* gerir scrollbarið stærra */
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-overflow: transparent;
+}
+.scroll-bar {
+    -fx-background-color: transparent;
+}

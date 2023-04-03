@@ -1,33 +1,44 @@
 package vinnsla;
 
+import java.util.Date;
+
 /**
- * Klasi fyrir review
+ * Klasi fyrir comment
  */
 
 public class Comment {
+    private int commentID;
+    private String userCommented;
+    private int dayTourID;
+    private String commentText;
+    private int likes;
+    private Date date;
 
-    private String tourName;
-    private DayTour dayTour;
-    private String review;
-    private float stars;
-
-    public Comment(String tourName, DayTour dayTour, String review, float stars){
-        this.tourName = tourName;
-        this.dayTour = dayTour;
-        this.review = review;
-        this.stars = stars;
+    public Comment(int commentID, String userCommented, int dayTourID, String commentText, int likes, Date date){
+        this.commentID = commentID;
+        this.userCommented = userCommented;
+        this.dayTourID = dayTourID;
+        this.commentText = commentText;
+        this.likes = likes;
+        this.date = date;
     }
 
-    public String getTourName() { return tourName; }
+    public int getCommentID() { return commentID; }
 
-    public DayTour getDayTour() { return dayTour; }
+    public String getUserCommented() { return userCommented; }
 
-    public String getReview() { return review; }
+    public int getDayTourID() { return dayTourID; }
 
-    public float getStars() { return stars; }
+    public String getCommentText() { return commentText; }
 
-    public void updateStars(float updatedStars){
-        stars = updatedStars;
+    public int getLikes() { return likes; }
+
+    public void addLike(){
+        likes++;
+    }
+
+    public Date getDate(){
+        return date;
     }
 
 

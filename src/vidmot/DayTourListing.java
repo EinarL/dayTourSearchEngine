@@ -75,20 +75,6 @@ public class DayTourListing extends AnchorPane {
         this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
     }
 
-    private Node shadowRoundedNode(Node inputNode){
-        final Rectangle clip = new Rectangle();
-        clip.arcWidthProperty().bind(clip.heightProperty().divide(4));
-        clip.arcHeightProperty().bind(clip.heightProperty().divide(4));
-        clip.setWidth(inputNode.getLayoutBounds().getWidth());
-        clip.setHeight(inputNode.getLayoutBounds().getHeight());
-        inputNode.setClip(clip);
-
-        Group group = new Group(inputNode);
-        group.setEffect(new DropShadow());
-
-        return group;
-    }
-
     public void bookTour() throws Exception {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/dayTourSite.fxml")));
         Parent newRoot = loader.load();

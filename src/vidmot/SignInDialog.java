@@ -81,6 +81,7 @@ public class SignInDialog {
             if(DayTourRepository.doesUserExist(usernameField.getText(), passwordField.getText())){
                 // geymum usernameið í User klasanum svo við vitum hver er signaður inn.
                 User.setUsername(usernameField.getText());
+                User.setUserID(DayTourRepository.getIDbyUser(usernameField.getText()));
 
                 showMainWindow();
             }else{ // ef notandi er ekki til í databaseinu
@@ -98,11 +99,12 @@ public class SignInDialog {
                 errorText.setText("username already exists!");
                 errorText.setVisible(true);
             }else{ // ef usernameið er laust
-                // geymum usernameið í User klasanum svo við vitum hver er signaður inn.
-                User.setUsername(usernameField.getText());
-
                 // bætum við notendanum í databaseinn
                 DayTourRepository.addUser(usernameField.getText(), passwordField.getText());
+
+                // geymum usernameið í User klasanum svo við vitum hver er signaður inn.
+                User.setUsername(usernameField.getText());
+                User.setUserID(DayTourRepository.getIDbyUser(usernameField.getText()));
 
                 showMainWindow();
             }
