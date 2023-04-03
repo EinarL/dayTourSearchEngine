@@ -76,7 +76,6 @@ public class DayTourRepository {
                                     res.getInt("Duration"), res.getFloat("Rating"));
             dayTourArray.add(dt);
         }
-
         return dayTourArray.toArray(DayTour[]::new);
     }
 
@@ -237,8 +236,65 @@ public class DayTourRepository {
         return res.next();
     }
 
+    public static Comment[] getCommentsByTour(int tourID) throws Exception{
+        getConnection();
+        Statement s = conn.createStatement();
+
+        String query = "SELECT * from comments WHERE dayTourID = '" + tourID + "'";
+
+        ResultSet res = s.executeQuery(query);
+        ArrayList<Comment> commentArray = new ArrayList<>();
+        while(res.next()){
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("date"));
+            Comment comment = new Comment(res.getInt("ID"), res.getString("userCommented"),
+                    res.getInt("dayTourID"), res.getString("commentText"), res.getInt("likes"), date);
+            commentArray.add(comment);
+        }
+
+        return commentArray.toArray(Comment[]::new);
+    }
+
     public void addComment(int dayTourId, String user, String comment, Date date){
 
+    }
+
+    public static boolean hasUserLikedComment(int commentID){
+        try{
+            getConnection();
+
+            Statement s = conn.createStatement();
+
+            String query = "SELECT * FROM userLikedComment WHERE userID = '" + User.getUserID() +  "' AND commentID = '" + commentID + "'";
+
+            ResultSet res = s.executeQuery(query);
+            // þetta mun skila true ef notandinn hefur like-að commentið, annars false
+            return res.next();
+        }catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Fall til þess að bæta like við comment á dagsferð
+     */
+    public static void addLike(int commentID) throws Exception {
+        getConnection();
+        // fyrst bætum við like á comments töfluna
+        String sql = "UPDATE comments SET likes = likes + 1 WHERE ID = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, Integer.toString(commentID));
+
+        pstmt.executeUpdate();
+        // svo bætum við hver var að like-a í userLikedComment töfluna
+        // svo að það sé hægt að gera virkni svo að sami user
+        // má ekki like-a sama comment oftar en tvisvar
+        sql = "INSERT INTO userLikedComment VALUES(?,?)";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, Integer.toString(User.getUserID()));
+        pstmt.setString(2, Integer.toString(commentID));
+
+        pstmt.executeUpdate();
     }
 
     public static void addUser(String username, String password) throws Exception {
@@ -250,6 +306,17 @@ public class DayTourRepository {
         pstmt.setString(2, password);
 
         pstmt.executeUpdate();
+    }
+
+    public static int getIDbyUser(String username) throws Exception {
+        getConnection();
+
+        String query = "SELECT userID FROM users WHERE username = '" + username + "'";
+
+        Statement s = conn.createStatement();
+        ResultSet res = s.executeQuery(query);
+
+        return res.getInt("userID");
     }
 
     /**
