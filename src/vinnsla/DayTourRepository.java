@@ -262,7 +262,6 @@ public class DayTourRepository {
             if(res.wasNull()){ // ef að rating er NULL, setjum það sem -1
                 rating = -1;
             }
-            System.out.println("rating is: " + rating);
             Comment comment = new Comment(res.getInt("ID"), res.getString("userCommented"),
                     res.getInt("dayTourID"), res.getString("commentText"), res.getInt("likes"), date, rating);
             commentArray.add(comment);
