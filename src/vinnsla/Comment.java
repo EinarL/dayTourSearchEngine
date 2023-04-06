@@ -13,14 +13,16 @@ public class Comment {
     private String commentText;
     private int likes;
     private Date date;
+    private float rating; // rating er það sem userCommented gefur dagsferðinni í einkunn
 
-    public Comment(int commentID, String userCommented, int dayTourID, String commentText, int likes, Date date){
+    public Comment(int commentID, String userCommented, int dayTourID, String commentText, int likes, Date date, float rating){
         this.commentID = commentID;
         this.userCommented = userCommented;
         this.dayTourID = dayTourID;
         this.commentText = commentText;
         this.likes = likes;
         this.date = date;
+        this.rating = rating;
     }
 
     public int getCommentID() { return commentID; }
@@ -32,6 +34,8 @@ public class Comment {
     public String getCommentText() { return commentText; }
 
     public int getLikes() { return likes; }
+
+    public float getRating() { return rating; }
 
     public void addLike(){
         likes++;

@@ -4,13 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import vinnsla.Comment;
 import vinnsla.DayTour;
@@ -40,6 +39,12 @@ public class DayTourSiteController {
     @FXML private ImageView dtImages;
     @FXML private ImageView starImg;
     @FXML private VBox commentPane;
+    @FXML private TextField ratingField;
+    @FXML private CheckBox giveRatingCheckbox;
+    @FXML private Label giveRatingText;
+    @FXML private Button incButton;
+    @FXML private Button decButton;
+    @FXML private TextArea commentText;
     private DayTour dt;
     private Image[] images;
     private int imagePointer = 0;
@@ -75,13 +80,28 @@ public class DayTourSiteController {
         String ratingNoDots = ratingStr.replace(".","");
         this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
 
-        Comment[] comments = DayTourRepository.getCommentsByTour(dt.getId());
+        // þetta er til þess að laga villu þar sem comments fóru fyrir utan VBox:
+        Rectangle clip = new Rectangle(commentPane.getWidth(), commentPane.getHeight());
+        clip.heightProperty().bind(commentPane.heightProperty());
+        clip.widthProperty().bind(commentPane.widthProperty());
+        commentPane.setClip(clip);
 
-        for(Comment cmt : comments){
-            CommentView cmtView = new CommentView(cmt.getCommentID(), cmt.getUserCommented(), cmt.getDate(), cmt.getCommentText(), cmt.getLikes());
-            commentPane.getChildren().add(cmtView);
+        // ef notandi hefur gefið þessari dagsferð einkunn áður, þá má hann það ekki aftur
+        if(DayTourRepository.hasUserRatedDayTour(dt.getId())){
+            userCannotRate();
         }
 
+        showComments();
+    }
+
+    private void showComments() throws Exception{
+        Comment[] comments = DayTourRepository.getCommentsByTour(dt.getId());
+
+        commentPane.getChildren().clear(); // fjarlægjum öll comments áður en við birtum þær
+        for(Comment cmt : comments){
+            CommentView cmtView = new CommentView(cmt);
+            commentPane.getChildren().add(cmtView);
+        }
     }
 
     public void goBack() throws IOException {
@@ -124,5 +144,63 @@ public class DayTourSiteController {
             imagePointer--;
             dtImages.setImage(images[imagePointer]);
         }
+    }
+
+    public void incrementRating(){
+        if(Float.parseFloat(ratingField.getText()) < 5){
+            ratingField.setText(String.valueOf(Float.parseFloat(ratingField.getText()) + 0.5));
+        }
+    }
+
+    public void decrementRating(){
+        if(Float.parseFloat(ratingField.getText()) > 0){
+            ratingField.setText(String.valueOf(Float.parseFloat(ratingField.getText()) - 0.5));
+        }
+    }
+
+    /**
+     * Keyrist þegar notandi ýtir á give rating checkbox-ið
+     */
+    public void doGiveRating(){
+        if(giveRatingCheckbox.isSelected()){
+            disableRating(false);
+        }else{
+            disableRating(true);
+        }
+    }
+
+    /**
+     * private aðferð til þess að gera rating fyrir comments óvirka
+     * @param b true ef maður vill disable-a, annars false
+     */
+    private void disableRating(boolean b){
+        giveRatingText.setDisable(b);
+        incButton.setDisable(b);
+        decButton.setDisable(b);
+        ratingField.setDisable(b);
+    }
+
+    /**
+     * keyrum þessa aðferð ef notandi er búinn að gefa dagsferðinni rating áður
+     * þá má hann það ekki aftur.
+     */
+    private void userCannotRate(){
+        giveRatingCheckbox.setSelected(false);
+        giveRatingCheckbox.setDisable(true);
+        disableRating(true);
+    }
+
+    /**
+     * Þegar notandi ýtir á "Comment" takkann
+     */
+    public void makeComment() throws Exception {
+        if(giveRatingCheckbox.isSelected()){ // gefa rating
+            DayTourRepository.addComment(dt.getId(), commentText.getText(), Float.parseFloat(ratingField.getText()));
+            userCannotRate();
+        }else{ // ekki gefa rating
+            DayTourRepository.addComment(dt.getId(), commentText.getText(), -1);
+        }
+
+        showComments(); // refresh comments
     }
 }
