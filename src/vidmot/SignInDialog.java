@@ -37,8 +37,9 @@ public class SignInDialog {
             hyperlinkText.setBorder(Border.EMPTY);
             hyperlinkText.setPadding(new Insets(4, 0, 4, 4));
 
+
             dialogStage.showAndWait();
-        }catch (IOException e){
+        }catch (Exception e){
             throw new RuntimeException(e);
         }
     }
@@ -116,7 +117,12 @@ public class SignInDialog {
      * birtir dayTours.fxml og lokar þessum dialog
      * @throws IOException
      */
-    private void showMainWindow() throws IOException {
+    private void showMainWindow() throws Exception {
+        // reiknar ratings á dagsferðunum, við ættum örgl að fjarlægja þetta,
+        // en þetta passar upp á að ef einhver bætir við dagsferð í databasinum, en ekki í forritinu sjálfu,
+        // að það sýnir rétt rating
+        DayTourRepository.refreshRatings();
+
         Stage primaryStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(DayToursApplication.class.getResource("../resources/dayTours.fxml"));
         primaryStage.setTitle("Day Trip Search");

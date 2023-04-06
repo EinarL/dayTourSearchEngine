@@ -68,17 +68,7 @@ public class DayTourSiteController {
             bookButton.setDisable(true);
         }
 
-        String ratingStr;
-        float rating = dt.getRating();
-        if (rating % 1 == 0){
-            int ratingInt = Math.round(rating);
-            ratingStr = Integer.toString(ratingInt);
-        }else{
-            ratingStr = Float.toString(rating);
-        }
-
-        String ratingNoDots = ratingStr.replace(".","");
-        this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
+        updateRating();
 
         // þetta er til þess að laga villu þar sem comments fóru fyrir utan VBox:
         Rectangle clip = new Rectangle(commentPane.getWidth(), commentPane.getHeight());
@@ -92,6 +82,27 @@ public class DayTourSiteController {
         }
 
         showComments();
+    }
+
+    private void updateRating() throws Exception {
+        dt = DayTourRepository.getDayTourByTitle(dt.getTourTitle());
+        float rating = dt.getRating();
+        if(rating != -1){ // ef dagsferðin er með einkunn
+            String ratingStr;
+
+            if (rating % 1 == 0){
+                int ratingInt = Math.round(rating);
+                ratingStr = Integer.toString(ratingInt);
+            }else{
+                ratingStr = Float.toString(rating);
+            }
+
+            String ratingNoDots = ratingStr.replace(".","");
+            this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
+            this.starImg.setVisible(true);
+        }else{
+            this.starImg.setVisible(false);
+        }
     }
 
     private void showComments() throws Exception{
@@ -197,10 +208,12 @@ public class DayTourSiteController {
         if(giveRatingCheckbox.isSelected()){ // gefa rating
             DayTourRepository.addComment(dt.getId(), commentText.getText(), Float.parseFloat(ratingField.getText()));
             userCannotRate();
+            updateRating();
         }else{ // ekki gefa rating
             DayTourRepository.addComment(dt.getId(), commentText.getText(), -1);
+            dt = DayTourRepository.getDayTourByTitle(dt.getTourTitle());
         }
-
+        commentText.setText("");
         showComments(); // refresh comments
     }
 }

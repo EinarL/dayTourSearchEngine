@@ -13,7 +13,7 @@ public class Comment {
     private String commentText;
     private int likes;
     private Date date;
-    private float rating; // rating er það sem userCommented gefur dagsferðinni í einkunn
+    private float rating; // rating er það sem userCommented gefur dagsferðinni í einkunn // rating = -1 ef það er ekki rating
 
     public Comment(int commentID, String userCommented, int dayTourID, String commentText, int likes, Date date, float rating){
         this.commentID = commentID;

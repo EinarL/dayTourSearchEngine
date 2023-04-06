@@ -54,9 +54,6 @@ public class CommentView extends AnchorPane {
             this.starImg.setVisible(false);
         }
 
-
-
-
         if(DayTourRepository.hasUserLikedComment(commentID)){
             hasLiked = true;
             likeImage.setImage(new Image("./images/colored_like.png"));
@@ -64,21 +61,35 @@ public class CommentView extends AnchorPane {
     }
 
     public void hoveringOverLikeButton(){
-        likeImage.setImage(new Image("./images/colored_like.png"));
+        if(!hasLiked){
+            likeImage.setImage(new Image("./images/colored_like.png"));
+        }else{
+            likeImage.setImage(new Image("./images/gray_like.png"));
+        }
+
     }
 
     public void StoppedHoveringOverLikeButton(){
         if(!hasLiked){
             likeImage.setImage(new Image("./images/gray_like.png"));
+        }else{
+            likeImage.setImage(new Image("./images/colored_like.png"));
         }
     }
 
+    /**
+     * keyrist þegar notandi ýtir á like hendina
+     * @throws Exception
+     */
     public void like() throws Exception {
-        if(!hasLiked){
+        if(!hasLiked){ // ef notandi er ekki búinn að likea commentið
             hasLiked = true;
-            // call database to add like
-            DayTourRepository.addLike(commentID);
             likes.setText(Integer.toString(Integer.parseInt(likes.getText()) + 1));
+            DayTourRepository.addLike(commentID);
+        }else{ // ef notandi er búinn að likea commentið, þá getur hann hætt við likeið
+            hasLiked = false;
+            likes.setText(Integer.toString(Integer.parseInt(likes.getText()) - 1));
+            DayTourRepository.removeLike(commentID);
         }
     }
 }
