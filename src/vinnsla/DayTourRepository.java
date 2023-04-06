@@ -236,6 +236,17 @@ public class DayTourRepository {
         return res.next();
     }
 
+    public static boolean hasUserRatedDayTour(int dayTourID) throws Exception {
+        getConnection();
+        Statement s = conn.createStatement();
+
+        String query = "SELECT * from comments WHERE userCommented = '" + User.getUsername() + "' AND dayTourID = '" + dayTourID + "' " +
+                "AND rating IS NOT NULL";
+        ResultSet res = s.executeQuery(query);
+        // skilar true ef user hefur gefið dagsferðinni einkunn, annars false því resultset mun vera tómt
+        return res.next();
+    }
+
     public static Comment[] getCommentsByTour(int tourID) throws Exception{
         getConnection();
         Statement s = conn.createStatement();
@@ -246,16 +257,36 @@ public class DayTourRepository {
         ArrayList<Comment> commentArray = new ArrayList<>();
         while(res.next()){
             Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("date"));
+
+            float rating = res.getFloat("rating");
+            if(res.wasNull()){ // ef að rating er NULL, setjum það sem -1
+                rating = -1;
+            }
             Comment comment = new Comment(res.getInt("ID"), res.getString("userCommented"),
-                    res.getInt("dayTourID"), res.getString("commentText"), res.getInt("likes"), date);
+                    res.getInt("dayTourID"), res.getString("commentText"), res.getInt("likes"), date, rating);
             commentArray.add(comment);
         }
 
         return commentArray.toArray(Comment[]::new);
     }
 
-    public void addComment(int dayTourId, String user, String comment, Date date){
+    public static void addComment(int dayTourId, String comment, float rating) throws Exception {
+        getConnection();
+        String sql = "INSERT INTO comments(dayTourID, userCommented, commentText, date, likes, rating) VALUES(?,?,?,?,?,?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
 
+        pstmt.setInt(1, dayTourId);
+        pstmt.setString(2, User.getUsername());
+        pstmt.setString(3, comment);
+        pstmt.setString(4, new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        pstmt.setInt(5, 0);
+        if(rating == -1){
+            pstmt.setNull(6, Types.NUMERIC);
+        }else{
+            pstmt.setFloat(6, rating);
+        }
+
+        pstmt.executeUpdate();
     }
 
     public static boolean hasUserLikedComment(int commentID){

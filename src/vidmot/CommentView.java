@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import vinnsla.Comment;
 import vinnsla.DayTourRepository;
 
 import java.io.IOException;
@@ -19,10 +20,11 @@ public class CommentView extends AnchorPane {
     @FXML private Label commentText;
     @FXML private Label likes;
     @FXML private ImageView likeImage;
+    @FXML private ImageView starImg;
     private boolean hasLiked = false;
     private final int commentID;
 
-    public CommentView(int commentID, String userCommented, Date date, String commentText, int likes){
+    public CommentView(Comment cmt){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/comment.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -31,11 +33,29 @@ public class CommentView extends AnchorPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        this.commentID = commentID;
-        this.userCommented.setText(userCommented);
-        this.date.setText(new SimpleDateFormat("dd/MM/yyyy").format(date));
-        this.commentText.setText(commentText);
-        this.likes.setText(Integer.toString(likes));
+        this.commentID = cmt.getCommentID();
+        this.userCommented.setText(cmt.getUserCommented());
+        this.date.setText(new SimpleDateFormat("dd/MM/yyyy").format(cmt.getDate()));
+        this.commentText.setText(cmt.getCommentText());
+        this.likes.setText(Integer.toString(cmt.getLikes()));
+
+        String ratingStr;
+        float rating = cmt.getRating();
+        if(rating != -1){
+            if (rating % 1 == 0){
+                int ratingInt = Math.round(rating);
+                ratingStr = Integer.toString(ratingInt);
+            }else{
+                ratingStr = Float.toString(rating);
+            }
+            String ratingNoDots = ratingStr.replace(".","");
+            this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
+        }else{
+            this.starImg.setVisible(false);
+        }
+
+
+
 
         if(DayTourRepository.hasUserLikedComment(commentID)){
             hasLiked = true;
