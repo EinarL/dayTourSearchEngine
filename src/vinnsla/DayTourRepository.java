@@ -1,5 +1,6 @@
 package vinnsla;
 
+import com.sun.marlin.FloatMath;
 import javafx.scene.image.Image;
 
 import javax.swing.plaf.nimbus.State;
@@ -31,6 +32,26 @@ public class DayTourRepository {
             System.err.println(e.getMessage());
         }
 
+    }
+
+    private static DayTour makeDayTour(ResultSet r) throws Exception {
+        String[] imgs = r.getString("images").split(",");
+        Image[] images = new Image[imgs.length];
+        for(int i = 0; i < images.length; i++){
+            images[i] = new Image(imgs[i]);
+        }
+        float rating = r.getFloat("Rating");
+        if(r.getInt("amountOfRatings") == 0){
+            // ef enginn hefur gefið þessari ferð einkunn þá er þessi dagsferð ekki með rating
+            // við táknum það með -1
+            rating = -1;
+        }
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(r.getString("Date"));
+        DayTour dt = new DayTour(r.getInt("ID"),r.getString("Title"), r.getString("Description"), images, date,
+                r.getInt("Price"), r.getInt("MaxSpots"), r.getInt("spotsLeft"), r.getString("Location"),
+                r.getInt("Duration"), rating);
+
+        return dt;
     }
 
     /**
@@ -65,18 +86,44 @@ public class DayTourRepository {
         ResultSet res = s.executeQuery(query);
         ArrayList<DayTour> dayTourArray = new ArrayList<>();
         while(res.next()){
-            String[] imgs = res.getString("images").split(",");
-            Image[] images = new Image[imgs.length];
-            for(int i = 0; i < images.length; i++){
-                images[i] = new Image(imgs[i]);
-            }
-            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
-            DayTour dt = new DayTour(res.getInt("ID"),res.getString("Title"), res.getString("Description"), images, date,
-                                    res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
-                                    res.getInt("Duration"), res.getFloat("Rating"));
-            dayTourArray.add(dt);
+            dayTourArray.add(makeDayTour(res));
         }
         return dayTourArray.toArray(DayTour[]::new);
+    }
+
+    /**
+     * fall til þess að reikna ratings hjá öllum dagsferðum.
+     * Rating = sumOfRatings / amountOfRatings
+     * @throws Exception
+     *  Það þarf að breyta þessu falli þannig að það uppfærir líka sumOfRatings og amountOfRatings
+     *  það fer í gegnum öll comments og fyrir hvert rating fyrir sérhvern daytour, þá er amountOfRatings
+     *  hversu mörg rating það eru fyrir þessa dagsferð og sumOfRatings er summa alla ratinga fyrir þessa dagsferð.
+     */
+
+    public static void refreshRatings() throws Exception {
+        getConnection();
+        Statement s = conn.createStatement();
+        String sql = "SELECT ID, Rating, sumOfRatings, amountOfRatings FROM dayTours";
+        ResultSet res = s.executeQuery(sql);
+        while(res.next()){
+            if(res.getInt("amountOfRatings") != 0){
+                float sumOfRatings = res.getFloat("sumOfRatings");
+                int amountOfRatings = res.getInt("amountOfRatings");
+
+                float averageRating = sumOfRatings / amountOfRatings;
+                // námundum að næsta .5
+                double roundedRating = Math.round(averageRating * 2) / 2.0;
+
+                float r = (float) roundedRating;
+
+                sql = "UPDATE dayTours SET Rating = ? WHERE ID = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, Float.toString(r));
+                pstmt.setString(2, Integer.toString(res.getInt("ID")));
+
+                pstmt.executeUpdate();
+            }
+        }
     }
 
     public static void addDayTour(String title, String description, String image, String date, int price, int maxSpots,
@@ -170,7 +217,7 @@ public class DayTourRepository {
         }
     }
 
-    public static DayTour[] getDayToursByUserBooked(String user) throws ClassNotFoundException, SQLException {
+    public static DayTour[] getDayToursByUserBooked(String user) {
 
         ArrayList<DayTour> dayTourArray = null;
         try {
@@ -186,44 +233,22 @@ public class DayTourRepository {
                 query = "SELECT * from dayTours WHERE ID=" + rs.getInt(1);
                 ResultSet res = s2.executeQuery(query);
                 while (res.next()){
-                    String[] imgs = res.getString("images").split(",");
-                    Image[] images = new Image[imgs.length];
-                    for(int i = 0; i < images.length; i++){
-                        images[i] = new Image(imgs[i]);
-                    }
-                    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
-                    DayTour dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), images, date,
-                            res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
-                            res.getInt("Duration"), res.getFloat("Rating"));
-                    dayTourArray.add(dt);
+                    dayTourArray.add(makeDayTour(res));
                 }
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         }
         return dayTourArray.toArray(DayTour[]::new);
     }
 
-    public static DayTour getDayTourByTitle(String title) throws ClassNotFoundException, SQLException, ParseException {
+    public static DayTour getDayTourByTitle(String title) throws Exception {
         getConnection();
         Statement s = conn.createStatement();
         String query = "SELECT * from dayTours WHERE title = '" + title + "'";
         ResultSet res = s.executeQuery(query);
-        DayTour dt = null;
-        while(res.next()){
-            String[] imgs = res.getString("images").split(",");
-            Image[] images = new Image[imgs.length];
-            for(int i = 0; i < images.length; i++){
-                images[i] = new Image(imgs[i], 588, 444, false, false); // breidd og hæð á myndinni
-            }
-            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(res.getString("Date"));
-            dt = new DayTour(res.getInt("ID"), res.getString("Title"), res.getString("Description"), images, date,
-                    res.getInt("Price"), res.getInt("MaxSpots"), res.getInt("spotsLeft"), res.getString("Location"),
-                    res.getInt("Duration"), res.getFloat("Rating"));
-        }
-        return dt;
+
+        return makeDayTour(res);
     }
 
     public static boolean hasUserBookedDayTour(int tourID) throws Exception {
@@ -270,12 +295,12 @@ public class DayTourRepository {
         return commentArray.toArray(Comment[]::new);
     }
 
-    public static void addComment(int dayTourId, String comment, float rating) throws Exception {
+    public static void addComment(int dayTourID, String comment, float rating) throws Exception {
         getConnection();
         String sql = "INSERT INTO comments(dayTourID, userCommented, commentText, date, likes, rating) VALUES(?,?,?,?,?,?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
-        pstmt.setInt(1, dayTourId);
+        pstmt.setInt(1, dayTourID);
         pstmt.setString(2, User.getUsername());
         pstmt.setString(3, comment);
         pstmt.setString(4, new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
@@ -284,7 +309,48 @@ public class DayTourRepository {
             pstmt.setNull(6, Types.NUMERIC);
         }else{
             pstmt.setFloat(6, rating);
+            addRating(dayTourID, rating);
         }
+
+        pstmt.executeUpdate();
+    }
+
+    /**
+     * private fall til þess að bæta við rating þegar það er commentað.
+     *
+     * @param dayTourID ID á dagsferð
+     * @param rating rating, 0 til 5
+     * @throws Exception
+     */
+    private static void addRating(int dayTourID, float rating) throws Exception{
+        getConnection();
+
+        String sql = "UPDATE dayTours SET sumOfRatings = sumOfRatings + ?, amountOfRatings = amountOfRatings + 1 WHERE ID = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, Float.toString(rating));
+        pstmt.setString(2, Integer.toString(dayTourID));
+
+        pstmt.executeUpdate();
+        // nú þarf að reikna Rating miðað við hvað sumOfRatings og amountOfRatings er
+        // Rating er fengið með því að fá average af öllum ratings, því er það sumOfRatings / amountOfRatings
+
+        sql = "SELECT sumOfRatings, amountOfRatings FROM dayTours WHERE ID = '" + dayTourID + "'";
+        Statement s = conn.createStatement();
+        ResultSet res = s.executeQuery(sql);
+
+        float sumOfRatings = res.getFloat("sumOfRatings");
+        int amountOfRatings = res.getInt("amountOfRatings");
+
+        float averageRating = sumOfRatings / amountOfRatings;
+        // námundum að næsta .5
+        double roundedRating = Math.round(averageRating * 2) / 2.0;
+
+        float r = (float) roundedRating;
+
+        sql = "UPDATE dayTours SET Rating = ? WHERE ID = ?";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, Float.toString(r));
+        pstmt.setString(2, Integer.toString(dayTourID));
 
         pstmt.executeUpdate();
     }
@@ -326,6 +392,23 @@ public class DayTourRepository {
         pstmt.setString(2, Integer.toString(commentID));
 
         pstmt.executeUpdate();
+    }
+
+    /**
+     * Fall til þess að fjarlægja like við comment á dagsferð
+     */
+    public static void removeLike(int commentID) throws Exception {
+        getConnection();
+        // fyrst fjarlægjum við like á comments töflunni
+        String sql = "UPDATE comments SET likes = likes - 1 WHERE ID = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, Integer.toString(commentID));
+
+        pstmt.executeUpdate();
+        // svo fjarlægjum við like-ið á userLikedComment töflunni
+        sql = "DELETE FROM userLikedComment WHERE userID = '" + User.getUserID() + "' AND commentID = '" + commentID + "'";
+        Statement s = conn.createStatement();
+        s.executeUpdate(sql);
     }
 
     public static void addUser(String username, String password) throws Exception {

@@ -63,16 +63,23 @@ public class DayTourListing extends AnchorPane {
         clip.setHeight(this.image.getLayoutBounds().getHeight());
         this.image.setClip(clip);
 
-        String ratingStr;
-        if (rating % 1 == 0){
-            int ratingInt = Math.round(rating);
-            ratingStr = Integer.toString(ratingInt);
+
+        //edita hér: ef rating er -1, þá ekki sýna stjörnur, heldur sýna bara "Unrated" texta eða ekki neitt visible(false) t.d.
+        if(rating != -1){ // ef dagsferðin er með einkunn
+            String ratingStr;
+            if (rating % 1 == 0){
+                int ratingInt = Math.round(rating);
+                ratingStr = Integer.toString(ratingInt);
+            }else{
+                ratingStr = Float.toString(rating);
+            }
+
+            String ratingNoDots = ratingStr.replace(".","");
+            this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
         }else{
-            ratingStr = Float.toString(rating);
+            this.starImg.setVisible(false);
         }
 
-        String ratingNoDots = ratingStr.replace(".","");
-        this.starImg.setImage(new Image("./images/stars/" + ratingNoDots + "rating.png"));
     }
 
     public void bookTour() throws Exception {
