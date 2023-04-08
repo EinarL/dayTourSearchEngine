@@ -28,6 +28,7 @@ public class DayTourRepository {
 
         try{
             conn = DriverManager.getConnection("jdbc:sqlite:src/database/dayTourSearchEngine.db");
+            conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
         }catch(SQLException e){
             System.err.println(e.getMessage());
         }
@@ -38,7 +39,7 @@ public class DayTourRepository {
         String[] imgs = r.getString("images").split(",");
         Image[] images = new Image[imgs.length];
         for(int i = 0; i < images.length; i++){
-            images[i] = new Image(imgs[i]);
+            images[i] = new Image(imgs[i], 588, 444, false, false); // breidd og hæð á myndinni
         }
         float rating = r.getFloat("Rating");
         if(r.getInt("amountOfRatings") == 0){
@@ -93,36 +94,27 @@ public class DayTourRepository {
 
     /**
      * fall til þess að reikna ratings hjá öllum dagsferðum.
+     * þetta fall þarf að keyrast ef það er bætt við dagsferð og rating fyrir sá dagsferð í gegnum databaseið
+     * til þess að rating sé rétt á dagsferðinni, ef það er bætt við dagsferð í gegnum forritið, þá þarf ekki
+     * að keyra þetta fall.
      * Rating = sumOfRatings / amountOfRatings
      * @throws Exception
-     *  Það þarf að breyta þessu falli þannig að það uppfærir líka sumOfRatings og amountOfRatings
-     *  það fer í gegnum öll comments og fyrir hvert rating fyrir sérhvern daytour, þá er amountOfRatings
-     *  hversu mörg rating það eru fyrir þessa dagsferð og sumOfRatings er summa alla ratinga fyrir þessa dagsferð.
      */
 
     public static void refreshRatings() throws Exception {
         getConnection();
+        // byrjum á að setja sum og amount of ratings sem 0
         Statement s = conn.createStatement();
-        String sql = "SELECT ID, Rating, sumOfRatings, amountOfRatings FROM dayTours";
+        String sql = "UPDATE dayTours SET sumOfRatings = 0, amountOfRatings = 0";
+        s.executeUpdate(sql);
+
+        // fáum öll ratings
+        sql = "SELECT rating, dayTourID from comments WHERE rating IS NOT NULL";
         ResultSet res = s.executeQuery(sql);
+
+        // bætum við ratings í dayTours töfluna á viðeigandi dagsferð
         while(res.next()){
-            if(res.getInt("amountOfRatings") != 0){
-                float sumOfRatings = res.getFloat("sumOfRatings");
-                int amountOfRatings = res.getInt("amountOfRatings");
-
-                float averageRating = sumOfRatings / amountOfRatings;
-                // námundum að næsta .5
-                double roundedRating = Math.round(averageRating * 2) / 2.0;
-
-                float r = (float) roundedRating;
-
-                sql = "UPDATE dayTours SET Rating = ? WHERE ID = ?";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, Float.toString(r));
-                pstmt.setString(2, Integer.toString(res.getInt("ID")));
-
-                pstmt.executeUpdate();
-            }
+            addRating(res.getInt("dayTourID"), res.getFloat("rating"));
         }
     }
 
