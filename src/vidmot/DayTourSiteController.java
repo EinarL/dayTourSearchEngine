@@ -8,7 +8,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import vinnsla.Comment;
@@ -45,11 +47,15 @@ public class DayTourSiteController {
     @FXML private Button incButton;
     @FXML private Button decButton;
     @FXML private TextArea commentText;
+    @FXML private StackPane stackPane;
+    @FXML private AnchorPane anchorPane;
+    @FXML private ImageView goBackImg;
+    @FXML private Label goBackLabel;
     private DayTour dt;
     private Image[] images;
     private int imagePointer = 0;
 
-    public void setTourInfo(String title) throws Exception {
+    public void setTourInfo(String title, Scene scene) throws Exception {
         dt = DayTourRepository.getDayTourByTitle(title);
 
         this.title.setText(title);
@@ -80,6 +86,11 @@ public class DayTourSiteController {
         if(DayTourRepository.hasUserRatedDayTour(dt.getId())){
             userCannotRate();
         }
+
+        // center content
+        stackPane.translateXProperty()
+                .bind(scene.widthProperty().subtract(stackPane.widthProperty())
+                        .divide(2));
 
         showComments();
     }
@@ -142,6 +153,19 @@ public class DayTourSiteController {
         }
         dt = DayTourRepository.getDayTourByTitle(dt.getTourTitle());
         spotsLeft.setText(dt.getSpotsLeft() + "/" + dt.getMaxSpots() + " seats left");
+    }
+
+    public void isHoveringBackButton(){
+        goBackLabel.setTextFill(Color.color(0.5294,0.8078,0.9216)); // skyblue
+        goBackImg.setFitWidth(43);
+        goBackImg.setFitHeight(41);
+
+    }
+
+    public void notHoveringBackButton(){
+        goBackLabel.setTextFill(Color.color(0,0,0)); // black
+        goBackImg.setFitWidth(42);
+        goBackImg.setFitHeight(40);
     }
 
     public void nextImage(){

@@ -9,7 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import vinnsla.DayTourRepository;
 import vinnsla.DayTour;
@@ -19,10 +23,14 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class DayTourOverviewController {
-    @FXML private VBox vbox;
+    @FXML private VBox bookedVbox; // vbox fyrir "your booked daytours"
+    @FXML private VBox yourVbox; // vbox fyrir "your daytours"
+    @FXML private ImageView goBackImg;
+    @FXML private Label goBackLabel;
+    @FXML private StackPane stackPane;
     private static final String user = User.getUsername();
 
-    public void showBookedDayTours(){
+    public void showBookedDayTours(Scene scene){
 
         DayTour[] dayTours = null;
         try {
@@ -33,10 +41,10 @@ public class DayTourOverviewController {
 
         if(dayTours == null) return;
 
-        vbox.getChildren().clear();
+        bookedVbox.getChildren().clear();
         for(DayTour dt : dayTours){
             DayTourListing dtListing = new DayTourListing(dt.getTourTitle(), dt.getDesc(), dt.getPrice(), dt.getSpotsLeft(), dt.getFrontImage(), dt.getDate(), dt.getLocation(), dt.getRating());
-            vbox.getChildren().add(dtListing);
+            bookedVbox.getChildren().add(dtListing);
             // bætum við cancel takka á hverja dagsferð
             Button cancelButton = new Button();
             cancelButton.setText("Cancel Booking");
@@ -48,17 +56,35 @@ public class DayTourOverviewController {
             cancelButton.getStylesheets().add(Objects.requireNonNull(getClass().getResource("../styles/style.css")).toExternalForm());
             cancelButton.setOnAction(e -> {
                 DayTourRepository.removeBooking(user, ((Label) dtListing.lookup("#title")).getText());
-                showBookedDayTours();
+                showBookedDayTours(scene);
             });
             dtListing.getChildren().add(cancelButton);
 
         }
+
+        // center content
+        stackPane.translateXProperty()
+                .bind(scene.widthProperty().subtract(stackPane.widthProperty())
+                        .divide(2));
     }
 
 
+    public void isHoveringBackButton(){
+        goBackLabel.setTextFill(Color.color(0.5294,0.8078,0.9216)); // skyblue
+        goBackImg.setFitWidth(43);
+        goBackImg.setFitHeight(41);
+
+    }
+
+    public void notHoveringBackButton(){
+        goBackLabel.setTextFill(Color.color(0,0,0)); // black
+        goBackImg.setFitWidth(42);
+        goBackImg.setFitHeight(40);
+    }
+
     public void goBack() throws IOException {
         Parent newRoot = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../resources/dayTours.fxml")));
-        Scene scene = vbox.getScene();
+        Scene scene = bookedVbox.getScene();
         scene.setRoot(newRoot);
     }
 

@@ -90,7 +90,7 @@ public class DayTourListing extends AnchorPane {
 
         DayTourSiteController cont = loader.getController();
         scene.setRoot(newRoot);
-        cont.setTourInfo(title.getText());
+        cont.setTourInfo(title.getText(), scene);
     }
 
 }
