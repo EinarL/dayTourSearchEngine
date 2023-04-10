@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import vinnsla.DayTourRepository;
 import vinnsla.DayTour;
 import vinnsla.User;
@@ -29,8 +30,20 @@ public class DayTourOverviewController {
     @FXML private Label goBackLabel;
     @FXML private StackPane stackPane;
     private static final String user = User.getUsername();
+    private Scene scene;
 
-    public void showBookedDayTours(Scene scene){
+    public void init(Scene scene){
+        this.scene = scene;
+        // center content
+        stackPane.translateXProperty()
+                .bind(scene.widthProperty().subtract(stackPane.widthProperty())
+                        .divide(2));
+
+        showBookedDayTours();
+        showYourDayTours();
+    }
+
+    public void showBookedDayTours(){
 
         DayTour[] dayTours = null;
         try {
@@ -56,16 +69,44 @@ public class DayTourOverviewController {
             cancelButton.getStylesheets().add(Objects.requireNonNull(getClass().getResource("../styles/style.css")).toExternalForm());
             cancelButton.setOnAction(e -> {
                 DayTourRepository.removeBooking(user, ((Label) dtListing.lookup("#title")).getText());
-                showBookedDayTours(scene);
+                showBookedDayTours();
             });
             dtListing.getChildren().add(cancelButton);
 
         }
+    }
 
-        // center content
-        stackPane.translateXProperty()
-                .bind(scene.widthProperty().subtract(stackPane.widthProperty())
-                        .divide(2));
+    public void showYourDayTours(){
+        DayTour[] dayTours = null;
+        try {
+            dayTours = DayTourRepository.getDayToursByOwner(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(dayTours == null) return;
+
+        yourVbox.getChildren().clear();
+        for(DayTour dt : dayTours){
+            DayTourListing dtListing = new DayTourListing(dt.getTourTitle(), dt.getDesc(), dt.getPrice(), dt.getSpotsLeft(), dt.getFrontImage(), dt.getDate(), dt.getLocation(), dt.getRating());
+            yourVbox.getChildren().add(dtListing);
+            // bætum við edit takka á hverja dagsferð
+            Button editButton = new Button();
+            editButton.setText("Edit Day Tour");
+            editButton.setPrefWidth(170);
+            editButton.setPrefHeight(50);
+            editButton.setFont(Font.font ("System", 18));
+            editButton.setLayoutX(507);
+            editButton.setLayoutY(236);
+            editButton.getStylesheets().add(Objects.requireNonNull(getClass().getResource("../styles/style.css")).toExternalForm());
+            editButton.setOnAction(e -> {
+                // þarf að breyta þessu fyrir edit í staðinn fyrir cancel
+                DayTourRepository.removeBooking(user, ((Label) dtListing.lookup("#title")).getText());
+                showYourDayTours();
+            });
+            dtListing.getChildren().add(editButton);
+
+        }
     }
 
 
@@ -80,6 +121,24 @@ public class DayTourOverviewController {
         goBackLabel.setTextFill(Color.color(0,0,0)); // black
         goBackImg.setFitWidth(42);
         goBackImg.setFitHeight(40);
+    }
+
+    /**
+     * keyrist þegar notandi ýtir á "Add a Daytour" takkann.
+     */
+    public void addDayTour() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/addTourDialog.fxml"));
+        Parent parent = fxmlLoader.load();
+        Stage dialogStage = new Stage();
+        Scene dialogScene = new Scene(parent, 800,790);
+        dialogStage.setScene(dialogScene);
+        dialogStage.setResizable(false);
+        AddTourDialog cont = fxmlLoader.getController();
+        cont.show();
+
+        dialogStage.showAndWait();
+        // uppfærum yourDayTours eftir að notandinn lokar dialognum.
+        showYourDayTours();
     }
 
     public void goBack() throws IOException {
