@@ -78,7 +78,7 @@ public class DayToursController implements Initializable {
         Scene scene = ((Node) ae.getSource()).getScene();
 
         DayTourOverviewController cont = loader.getController();
-        cont.showBookedDayTours(scene);
+        cont.init(scene);
         scene.setRoot(newRoot);
 
     }

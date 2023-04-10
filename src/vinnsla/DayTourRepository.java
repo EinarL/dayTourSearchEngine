@@ -39,7 +39,9 @@ public class DayTourRepository {
         String[] imgs = r.getString("images").split(",");
         Image[] images = new Image[imgs.length];
         for(int i = 0; i < images.length; i++){
-            images[i] = new Image(imgs[i], 588, 444, false, false); // breidd og hæð á myndinni
+            if(!imgs[i].equals("")){
+                images[i] = new Image(imgs[i], 588, 444, false, false); // breidd og hæð á myndinni
+            }
         }
         float rating = r.getFloat("Rating");
         if(r.getInt("amountOfRatings") == 0){
@@ -118,31 +120,23 @@ public class DayTourRepository {
         }
     }
 
-    public static void addDayTour(String title, String description, String image, String date, int price, int maxSpots,
-                           int spotsLeft, String location, int duration, float rating) throws Exception {
+    public static void addDayTour(String title, String description, String images, String date, int price, int seats,
+                                  String location, int duration) throws Exception {
         getConnection();
 
-        Statement s = conn.createStatement();
-        String query = "SELECT MAX(id) from dayTours";
-        ResultSet rs = s.executeQuery(query);
-        int id = rs.getInt(1) + 1;
-
-        s = conn.createStatement();
-        String sql = "INSERT INTO dayTours(ID, Title, Description, Images, Date, Price, MaxSpots, SpotsLeft, Location, Duration, Rating) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO dayTours(Title, Owner, Description, Images, Date, Price, MaxSpots, SpotsLeft, Location, Duration) VALUES(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setInt(1, id);
-        pstmt.setString(2, title);
+        pstmt.setString(1, title);
+        pstmt.setString(2, User.getUsername());
         pstmt.setString(3, description);
-        pstmt.setString(4, image);
+        pstmt.setString(4, images);
         pstmt.setString(5, date);
         pstmt.setInt(6, price);
-        pstmt.setInt(7, maxSpots);
-        pstmt.setInt(8, spotsLeft);
+        pstmt.setInt(7, seats);
+        pstmt.setInt(8, seats);
         pstmt.setString(9, location);
         pstmt.setInt(10, duration);
-        pstmt.setFloat(11, rating);
         pstmt.executeUpdate();
-
     }
 
 
@@ -230,6 +224,19 @@ public class DayTourRepository {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return dayTourArray.toArray(DayTour[]::new);
+    }
+
+    public static DayTour[] getDayToursByOwner(String owner) throws Exception {
+
+        Statement s = conn.createStatement();
+
+        String query = "SELECT * FROM dayTours WHERE Owner = '" + owner+ "'";
+        ResultSet res = s.executeQuery(query);
+        ArrayList<DayTour> dayTourArray = new ArrayList<>();
+        while(res.next()){
+            dayTourArray.add(makeDayTour(res));
         }
         return dayTourArray.toArray(DayTour[]::new);
     }
@@ -425,6 +432,23 @@ public class DayTourRepository {
         return res.getInt("userID");
     }
 
+    public static boolean doesDayTourExist(String title) {
+        try{
+            getConnection();
+
+            Statement s = conn.createStatement();
+
+            String query = "SELECT * FROM dayTours WHERE Title = '" + title + "'";
+
+            ResultSet res = s.executeQuery(query);
+            // þetta mun skila false ef dagsferðin er ekki til en true annars
+            return res.next();
+        }catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /**
      * Keyrist þegar notandi vill signa inn.
      * athugar hvort usernameið og passwordið passi við notenda sem er til í databaseinu.
@@ -445,7 +469,6 @@ public class DayTourRepository {
         }catch(SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
-        System.err.println("Villa í doesUserExist() fallinu í Database");
         return false;
     }
 
@@ -463,7 +486,6 @@ public class DayTourRepository {
         }catch(SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
-        System.err.println("Villa í doesUserExist() fallinu í Database");
         return false;
     }
 }
