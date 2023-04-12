@@ -22,13 +22,15 @@ public class DayTour{
     private String location;
     private int duration;
     private float rating;
+    private String imagesString;
 
-    public DayTour(int ID, String tourTitle, String desc, Image[] images, Date date, int price,
+    public DayTour(int ID, String tourTitle, String desc, Image[] images, String imagesString,Date date, int price,
                    int maxSpots, int spotsLeft, String location, int duration, float rating){
         this.ID = ID;
         this.tourTitle = tourTitle;
         this.desc = desc;
         this.images = images;
+        this.imagesString = imagesString;
         this.date = date;
         this.price = price;
         this.maxSpots = maxSpots;
@@ -70,12 +72,20 @@ public class DayTour{
         return location;
     }
 
+    public int getDuration(){
+        return duration;
+    }
+
     public float getRating() {
         return rating;
     }
 
     public Image[] getImages() {
         return images;
+    }
+
+    public String getImagesString(){
+        return imagesString;
     }
 
     public Image getFrontImage(){

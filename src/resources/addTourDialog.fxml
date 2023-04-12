@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="790.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.AddTourDialog">
    <children>
-      <Label layoutX="285.0" text="Add a Daytour">
+      <Label fx:id="addTourText" layoutX="272.0" text="Add a Day Tour">
          <font>
             <Font size="36.0" />
          </font>
@@ -100,7 +100,7 @@
             <Font size="18.0" />
          </font>
       </TextField>
-      <Button fx:id="confirmButton" defaultButton="true" layoutX="549.0" layoutY="712.0" mnemonicParsing="false" onAction="#confirmAdd" prefHeight="60.0" prefWidth="225.0" text="Add Daytour">
+      <Button fx:id="confirmButton" defaultButton="true" layoutX="549.0" layoutY="712.0" mnemonicParsing="false" onAction="#confirmAdd" prefHeight="60.0" prefWidth="225.0" text="Add Day Tour">
          <font>
             <Font size="24.0" />
          </font>

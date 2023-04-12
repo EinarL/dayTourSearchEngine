@@ -10,6 +10,7 @@ import vinnsla.DayTourRepository;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -26,15 +27,43 @@ public class AddTourDialog {
     @FXML private TextField price;
     @FXML private TextField availableSeats; // þetta er bæði MaxSpots og SpotsLeft
     @FXML private Label errorText;
+    @FXML private Label addTourText;
+    @FXML private Button confirmButton;
+    private boolean isEditing; // ef þetta er false þá er notandinn að búa til nýja dagsferð en ekki að edita dagsferð
+    private String dtTitle = null; // nafnið á dagsferðinni sem notandi er að edita
 
+    public void show(boolean isEditing){
+        ObservableList<String> areas = FXCollections.observableArrayList("Vesturland","Norðurland","Suðurland","Austurland");
 
-    public void show(){
-        ObservableList<String> areas = FXCollections.observableArrayList("Allt land","Vesturland","Norðurland","Suðurland","Austurland");
+        this.isEditing = isEditing;
 
         areaDropdown.setItems(areas);
-        areaDropdown.setValue(areas.get(0));
+        if(!isEditing){
+            areaDropdown.setValue(areas.get(0));
+            date.setValue(LocalDate.now());
+        }else{
+            addTourText.setText("Edit Day Tour");
+            confirmButton.setText("Edit Day Tour");
+        }
+    }
 
-        date.setValue(LocalDate.now());
+    /**
+     * Þetta er fall sem keyrist aðeins ef notandi er að edita dagsferð
+     * Fallið fyllir inn í boxin með upplýsingum af dagsferðinni sem notandinn er að edita.
+     * @param dayTourTitle nafnið á dagsferðinni sem notandinn er að breyta.
+     */
+    public void addTourInfo(String dayTourTitle) throws Exception {
+            DayTour dt = DayTourRepository.getDayTourByTitle(dayTourTitle);
+            dtTitle = dayTourTitle;
+
+            title.setText(dt.getTourTitle());
+            desc.setText(dt.getDesc());
+            images.setText(dt.getImagesString());
+            date.setValue(dt.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            areaDropdown.setValue(dt.getLocation());
+            duration.setText(String.valueOf(dt.getDuration()));
+            price.setText(String.valueOf(dt.getPrice()));
+            availableSeats.setText(String.valueOf(dt.getMaxSpots()));
     }
 
     /**
@@ -44,9 +73,16 @@ public class AddTourDialog {
     public void confirmAdd() throws Exception {
         if(!checkInput()) return;
         String d = date.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        DayTourRepository.addDayTour(title.getText(), desc.getText(), images.getText(), d,
-                Integer.parseInt(price.getText()), Integer.parseInt(availableSeats.getText()),
-                areaDropdown.getValue(), Integer.parseInt(duration.getText()));
+        if(!isEditing){
+            DayTourRepository.addDayTour(title.getText(), desc.getText(), images.getText(), d,
+                    Integer.parseInt(price.getText()), Integer.parseInt(availableSeats.getText()),
+                    areaDropdown.getValue(), Integer.parseInt(duration.getText()));
+        }else{ // if isEditing
+            DayTourRepository.editDayTour(dtTitle, title.getText(), desc.getText(), images.getText(), d,
+                    Integer.parseInt(price.getText()), Integer.parseInt(availableSeats.getText()),
+                    areaDropdown.getValue(), Integer.parseInt(duration.getText()));
+        }
+
         close();
     }
 
@@ -64,6 +100,8 @@ public class AddTourDialog {
         }
 
         if(DayTourRepository.doesDayTourExist(title.getText())){
+            if(isEditing && title.getText().equals(dtTitle)) return true;
+
             errorText.setText("The title cannot be the same as another day tour!");
             return false;
         }
