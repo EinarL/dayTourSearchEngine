@@ -56,7 +56,12 @@ public class DayTourOverviewController {
 
         bookedVbox.getChildren().clear();
         for(DayTour dt : dayTours){
-            DayTourListing dtListing = new DayTourListing(dt.getTourTitle(), dt.getDesc(), dt.getPrice(), dt.getSpotsLeft(), dt.getFrontImage(), dt.getDate(), dt.getLocation(), dt.getRating());
+            int[] booking = DayTourRepository.getBooking(dt.getId()); // [numParticipants, price]
+            if(booking == null) continue;
+
+            DayTourListing dtListing = new DayTourListing(dt.getTourTitle(), dt.getDesc(), booking[1], dt.getSpotsLeft(), dt.getFrontImage(), dt.getDate(), dt.getLocation(), dt.getRating());
+            dtListing.setSpotsLeft(booking[0]);
+
             bookedVbox.getChildren().add(dtListing);
             // bætum við cancel takka á hverja dagsferð
             Button cancelButton = new Button();
@@ -64,15 +69,14 @@ public class DayTourOverviewController {
             cancelButton.setPrefWidth(170);
             cancelButton.setPrefHeight(50);
             cancelButton.setFont(Font.font ("System", 18));
-            cancelButton.setLayoutX(507);
+            cancelButton.setLayoutX(527);
             cancelButton.setLayoutY(236);
             cancelButton.getStylesheets().add(Objects.requireNonNull(getClass().getResource("../styles/style.css")).toExternalForm());
             cancelButton.setOnAction(e -> {
-                DayTourRepository.removeBooking(user, ((Label) dtListing.lookup("#title")).getText());
+                DayTourRepository.removeBooking(user, dt.getId(), ((Label) dtListing.lookup("#title")).getText());
                 showBookedDayTours();
             });
             dtListing.getChildren().add(cancelButton);
-
         }
     }
 

@@ -30,7 +30,7 @@ public class AddTourDialog {
     @FXML private Label addTourText;
     @FXML private Button confirmButton;
     private boolean isEditing; // ef þetta er false þá er notandinn að búa til nýja dagsferð en ekki að edita dagsferð
-    private String dtTitle = null; // nafnið á dagsferðinni sem notandi er að edita
+    private DayTour dt = null; // dagsferðin sem notandi er að edita
 
     public void show(boolean isEditing){
         ObservableList<String> areas = FXCollections.observableArrayList("Vesturland","Norðurland","Suðurland","Austurland");
@@ -53,8 +53,7 @@ public class AddTourDialog {
      * @param dayTourTitle nafnið á dagsferðinni sem notandinn er að breyta.
      */
     public void addTourInfo(String dayTourTitle) throws Exception {
-            DayTour dt = DayTourRepository.getDayTourByTitle(dayTourTitle);
-            dtTitle = dayTourTitle;
+            dt = DayTourRepository.getDayTourByTitle(dayTourTitle);
 
             title.setText(dt.getTourTitle());
             desc.setText(dt.getDesc());
@@ -78,9 +77,9 @@ public class AddTourDialog {
                     Integer.parseInt(price.getText()), Integer.parseInt(availableSeats.getText()),
                     areaDropdown.getValue(), Integer.parseInt(duration.getText()));
         }else{ // if isEditing
-            DayTourRepository.editDayTour(dtTitle, title.getText(), desc.getText(), images.getText(), d,
+            DayTourRepository.editDayTour(dt.getTourTitle(), title.getText(), desc.getText(), images.getText(), d,
                     Integer.parseInt(price.getText()), Integer.parseInt(availableSeats.getText()),
-                    areaDropdown.getValue(), Integer.parseInt(duration.getText()));
+                    dt.getMaxSpots() - dt.getSpotsLeft(), areaDropdown.getValue(), Integer.parseInt(duration.getText()));
         }
 
         close();
@@ -89,7 +88,8 @@ public class AddTourDialog {
     /**
      * private fall til þess að athuga að allt sem notandi setti í textaboxin sé löglegt.
      * Title má ekki vera tómt, eða hafa sama title og einhver önnur dagsferð
-     * Duration, Price og availableSeats verða að vera heiltölur.
+     * Duration, Price og availableSeats verða að vera heiltölur >= 0.
+     * if isEditing, þá má availableSeats ekki vera minni en fjöldi manns sem er bókaður fyrir þessa dagsferð.
      *
      * @return skilar true ef notandi má búa til dagsferð, annars false
      */
@@ -100,10 +100,10 @@ public class AddTourDialog {
         }
 
         if(DayTourRepository.doesDayTourExist(title.getText())){
-            if(isEditing && title.getText().equals(dtTitle)) return true;
-
-            errorText.setText("The title cannot be the same as another day tour!");
-            return false;
+            if(!(isEditing && title.getText().equals(dt.getTourTitle()))){
+                errorText.setText("The title cannot be the same as another day tour!");
+                return false;
+            }
         }
         try{
             Integer.parseInt(duration.getText());
@@ -112,6 +112,20 @@ public class AddTourDialog {
         } catch(NumberFormatException e){
             errorText.setText("Duration, price per person, and amount of available seats must all be integers!");
             return false;
+        }
+
+        if(Integer.parseInt(duration.getText()) <= 0 || Integer.parseInt(price.getText()) < 0 || Integer.parseInt(availableSeats.getText()) < 0){
+            errorText.setText("Duration, price per person, and amount of available seats must be positive integers!");
+            return false;
+        }
+
+        if(isEditing){
+            // ef fjöldi bókaða manns í dagsferðina er meiri en leyfilegur fjöldi
+            if(dt.getMaxSpots() - dt.getSpotsLeft() > Integer.parseInt(availableSeats.getText())){
+                errorText.setText("There are " + (dt.getMaxSpots() - dt.getSpotsLeft()) + " people " +
+                        "booked for this day tour \n the amount of available seats cannot be less than that!");
+                return false;
+            }
         }
 
         return true;

@@ -82,6 +82,15 @@ public class DayTourListing extends AnchorPane {
 
     }
 
+    /**
+     * þetta er fall til þess að breyta spotsLeft textanum.
+     * þetta fall er aðeins notað fyrir Booking
+     * @param n bókuð dagsferð fyrir n marga.
+     */
+    public void setSpotsLeft(int n){
+        spotsLeft.setText("Booked for " + n + " people");
+    }
+
     public void bookTour() throws Exception {
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("../resources/dayTourSite.fxml")));
         Parent newRoot = loader.load();
