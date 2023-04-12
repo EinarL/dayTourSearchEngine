@@ -1,5 +1,7 @@
 package vidmot;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,6 +53,7 @@ public class DayTourSiteController {
     @FXML private AnchorPane anchorPane;
     @FXML private ImageView goBackImg;
     @FXML private Label goBackLabel;
+    @FXML private ComboBox<String> commentOrder;
     private DayTour dt;
     private Image[] images;
     private int imagePointer = 0;
@@ -67,6 +70,18 @@ public class DayTourSiteController {
         this.area.setText("Location: " + dt.getLocation());
 
         this.images = dt.getImages();
+
+        ObservableList<String> order = FXCollections.observableArrayList("Aldri", "Likes");
+
+        commentOrder.setItems(order);
+        commentOrder.setValue(order.get(0));
+        commentOrder.setOnAction(event -> {
+            try {
+                showComments();
+            } catch (Exception e) {
+
+            }
+        });
 
 
         // ef notandi hefur bókað ferðina, þá getur hann ekki bókað hana aftur
@@ -117,7 +132,7 @@ public class DayTourSiteController {
     }
 
     private void showComments() throws Exception{
-        Comment[] comments = DayTourRepository.getCommentsByTour(dt.getId());
+        Comment[] comments = DayTourRepository.getCommentsByTour(dt.getId(), commentOrder.getValue());
 
         commentPane.getChildren().clear(); // fjarlægjum öll comments áður en við birtum þær
         for(Comment cmt : comments){

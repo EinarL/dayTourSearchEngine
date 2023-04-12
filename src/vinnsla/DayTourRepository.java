@@ -301,11 +301,15 @@ public class DayTourRepository {
         return res.next();
     }
 
-    public static Comment[] getCommentsByTour(int tourID) throws Exception{
+    public static Comment[] getCommentsByTour(int tourID, String order) throws Exception{
         getConnection();
         Statement s = conn.createStatement();
 
-        String query = "SELECT * from comments WHERE dayTourID = '" + tourID + "'";
+        String orderBy = "";
+        if(order.equals("Likes")){
+            orderBy = "ORDER BY Likes DESC";
+        }
+        String query = "SELECT * from comments WHERE dayTourID = '" + tourID + "'" + orderBy;
 
         ResultSet res = s.executeQuery(query);
         ArrayList<Comment> commentArray = new ArrayList<>();
