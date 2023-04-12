@@ -147,53 +147,45 @@ public class DayTourRepository {
      * @param images
      * @param date
      * @param price
-     * @param maxSpots
+     * @param spots
      * @param location
      * @param duration
      * @throws Exception
      */
     public static void editDayTour(String dtTitleToEdit, String newTitle, String desc, String images,
-                                   String date, int price, int maxSpots, String location, int duration) throws Exception {
+                                   String date, int price, int spots, int spotsTaken, String location, int duration) throws Exception {
         String sql = "UPDATE dayTours SET Title = ?, Description = ?, Images = ?, Date = ?, Price = ?," +
-                                        " MaxSpots = ?, Location = ?, Duration = ? WHERE Title = ?";
+                                        " MaxSpots = ?, SpotsLeft = ? - ?, Location = ?, Duration = ? WHERE Title = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, newTitle);
         pstmt.setString(2, desc);
         pstmt.setString(3, images);
         pstmt.setString(4, date);
         pstmt.setInt(5, price);
-        pstmt.setInt(6, maxSpots);
-        pstmt.setString(7, location);
-        pstmt.setInt(8, duration);
-        pstmt.setString(9, dtTitleToEdit);
+        pstmt.setInt(6, spots);
+        pstmt.setInt(7, spots);
+        pstmt.setInt(8, spotsTaken);
+        pstmt.setString(9, location);
+        pstmt.setInt(10, duration);
+        pstmt.setString(11, dtTitleToEdit);
         pstmt.executeUpdate();
     }
 
 
-    public static void addBooking(String user, int numParticiapants, String tourName){
+    public static void addBooking(String user, int numParticiapants, String tourName, int id, int price){
         try{
             getConnection();
 
-            Statement s = conn.createStatement();
-
-            String query = "SELECT SpotsLeft from dayTours WHERE title = '" + tourName + "'";
-            ResultSet rs = s.executeQuery(query);
-            int spots = rs.getInt(1);
-            int newSpots = spots - numParticiapants;
-
-            String sql = "UPDATE dayTours SET SpotsLeft = " + newSpots + " WHERE title = '" + tourName + "'";
+            String sql = "UPDATE dayTours SET SpotsLeft = SpotsLeft - " + numParticiapants + " WHERE title = '" + tourName + "'";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
 
-            query = "SELECT ID FROM dayTours WHERE Title='" + tourName +"'";
-            rs = s.executeQuery(query);
-            int id = rs.getInt(1);
-
-            sql = "INSERT INTO bookings VALUES(?,?,?)";
+            sql = "INSERT INTO bookings VALUES(?,?,?,?)";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user);
             pstmt.setInt(2, id);
             pstmt.setInt(3, numParticiapants);
+            pstmt.setInt(4, price);
             pstmt.executeUpdate();
 
 
@@ -202,35 +194,44 @@ public class DayTourRepository {
         }
     }
 
-    public static void removeBooking(String user, String tourName){
+    public static void removeBooking(String user, int dayTourId, String tourName){
         try{
             getConnection();
             Statement s = conn.createStatement();
 
-            String query = "SELECT ID FROM dayTours WHERE title = '" + tourName + "'";
+            String query = "SELECT numParticipants FROM bookings WHERE username = '" + user + "' AND dayTourID = " + dayTourId;
             ResultSet rs = s.executeQuery(query);
-            int dayTourId = rs.getInt(1);
-
-            query = "SELECT numParticipants FROM bookings WHERE username = '" + user + "' AND dayTourID = " + dayTourId;
-            rs = s.executeQuery(query);
             int numParticipants = rs.getInt(1);
 
-            query = "SELECT spotsLeft FROM dayTours WHERE title = '" + tourName + "'";
-            rs = s.executeQuery(query);
-            int oldSpots = rs.getInt(1);
-            int newSpots = numParticipants + oldSpots;
-
-            String sql = "UPDATE dayTours SET spotsLeft = " + newSpots + " WHERE title = '" + tourName + "'";
+            String sql = "UPDATE dayTours SET spotsLeft = spotsLeft + " + numParticipants + " WHERE title = '" + tourName + "'";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
 
             sql = "DELETE FROM bookings WHERE username = '" + user + "' AND dayTourID = " + dayTourId + " AND numParticipants = " + numParticipants;
-            PreparedStatement pstmt2 = conn.prepareStatement(sql);
-            pstmt2.executeUpdate();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
 
         }catch(SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Fall til þess að fá number of participants og price frá booking töflunni.
+     * @return int [num of participants, price]
+     */
+    public static int[] getBooking(int dayTourID){
+        try{
+            Statement s = conn.createStatement();
+            String query = "SELECT numParticipants, price from bookings WHERE username = '" + User.getUsername() + "'" +
+                    " AND dayTourID = " + dayTourID;
+            ResultSet res = s.executeQuery(query);
+
+            return new int[]{res.getInt("numParticipants"), res.getInt("price")};
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static DayTour[] getDayToursByUserBooked(String user) {

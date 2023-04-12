@@ -46,7 +46,7 @@ public class BookTourDialog extends DialogPane {
 
     public void confirmBooking(){
         int num = Integer.parseInt(amount.getText());
-        DayTourRepository.addBooking(User.getUsername(), num, tourName.getText());
+        DayTourRepository.addBooking(User.getUsername(), num, tourName.getText(), dt.getId(), Integer.parseInt(amount.getText())*oneTicketPrice);
         close();
     }
 
