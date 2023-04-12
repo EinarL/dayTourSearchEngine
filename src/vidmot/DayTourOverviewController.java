@@ -93,6 +93,7 @@ public class DayTourOverviewController {
             // bætum við edit takka á hverja dagsferð
             Button editButton = new Button();
             editButton.setText("Edit Day Tour");
+            editButton.setId("edit-button");
             editButton.setPrefWidth(170);
             editButton.setPrefHeight(50);
             editButton.setFont(Font.font ("System", 18));
@@ -100,8 +101,28 @@ public class DayTourOverviewController {
             editButton.setLayoutY(236);
             editButton.getStylesheets().add(Objects.requireNonNull(getClass().getResource("../styles/style.css")).toExternalForm());
             editButton.setOnAction(e -> {
-                // þarf að breyta þessu fyrir edit í staðinn fyrir cancel
-                DayTourRepository.removeBooking(user, ((Label) dtListing.lookup("#title")).getText());
+                // keyrist þegar notandi ýtir á edit takkann
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../resources/addTourDialog.fxml"));
+                Parent parent = null;
+                try {
+                    parent = fxmlLoader.load();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                Stage dialogStage = new Stage();
+                Scene dialogScene = new Scene(parent, 800,790);
+                dialogStage.setScene(dialogScene);
+                dialogStage.setResizable(false);
+                AddTourDialog cont = fxmlLoader.getController();
+                cont.show(true);
+                try {
+                    cont.addTourInfo(dt.getTourTitle());
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+
+                dialogStage.showAndWait();
+                // uppfærum yourDayTours eftir að notandinn lokar dialognum.
                 showYourDayTours();
             });
             dtListing.getChildren().add(editButton);
@@ -134,7 +155,7 @@ public class DayTourOverviewController {
         dialogStage.setScene(dialogScene);
         dialogStage.setResizable(false);
         AddTourDialog cont = fxmlLoader.getController();
-        cont.show();
+        cont.show(false);
 
         dialogStage.showAndWait();
         // uppfærum yourDayTours eftir að notandinn lokar dialognum.

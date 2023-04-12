@@ -50,7 +50,7 @@ public class DayTourRepository {
             rating = -1;
         }
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse(r.getString("Date"));
-        DayTour dt = new DayTour(r.getInt("ID"),r.getString("Title"), r.getString("Description"), images, date,
+        DayTour dt = new DayTour(r.getInt("ID"),r.getString("Title"), r.getString("Description"), images, r.getString("images"), date,
                 r.getInt("Price"), r.getInt("MaxSpots"), r.getInt("spotsLeft"), r.getString("Location"),
                 r.getInt("Duration"), rating);
 
@@ -136,6 +136,36 @@ public class DayTourRepository {
         pstmt.setInt(8, seats);
         pstmt.setString(9, location);
         pstmt.setInt(10, duration);
+        pstmt.executeUpdate();
+    }
+
+    /**
+     *  Uppfærir dagsferðina dtTitleToEdit með nýjum upplýsingum
+     * @param dtTitleToEdit
+     * @param newTitle
+     * @param desc
+     * @param images
+     * @param date
+     * @param price
+     * @param maxSpots
+     * @param location
+     * @param duration
+     * @throws Exception
+     */
+    public static void editDayTour(String dtTitleToEdit, String newTitle, String desc, String images,
+                                   String date, int price, int maxSpots, String location, int duration) throws Exception {
+        String sql = "UPDATE dayTours SET Title = ?, Description = ?, Images = ?, Date = ?, Price = ?," +
+                                        " MaxSpots = ?, Location = ?, Duration = ? WHERE Title = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, newTitle);
+        pstmt.setString(2, desc);
+        pstmt.setString(3, images);
+        pstmt.setString(4, date);
+        pstmt.setInt(5, price);
+        pstmt.setInt(6, maxSpots);
+        pstmt.setString(7, location);
+        pstmt.setInt(8, duration);
+        pstmt.setString(9, dtTitleToEdit);
         pstmt.executeUpdate();
     }
 

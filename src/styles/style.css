@@ -28,3 +28,10 @@
 .button:hover {
     -fx-background-color: rgb(255,148,148);
 }
+
+#edit-button{
+    -fx-background-color: rgb(135,206,235);
+}
+#edit-button:hover{
+    -fx-background-color: rgb(112,168,192);
+}

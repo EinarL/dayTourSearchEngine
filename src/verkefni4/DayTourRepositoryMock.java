@@ -16,11 +16,11 @@ public class DayTourRepositoryMock implements DayTourRepo {
     private Booking[] bookings;
 
     public DayTourRepositoryMock() {
-        DayTour einn = new DayTour(1,"ABC ferð","Þetta er fyrsta ferðin",new Image[0],new Date(),1234,10,10,"Austurland",12,0);
-        DayTour tveir = new DayTour(1,"Peninga ferð","Þetta er dýrasta ferðin",new Image[0],new Date(),100000,15,15,"Vesturland",8,0);
-        DayTour þrir = new DayTour(1,"Stjörnu ferð","Þetta er besta ferðin",new Image[0],new Date(),5000,20,10,"Suðurland",8,5);
-        DayTour fjorir = new DayTour(1,"Norður ferð","Þetta er Norðurlands ferðin",new Image[0],new Date(),4000,10,10,"Norðurland",2,3);
-        DayTour fimm = new DayTour(1,"Uppbókuð ferð","Þetta er uppbókuð ferð",new Image[0],new Date(),1500,10,0,"Vesturland",3,0);
+        DayTour einn = new DayTour(1,"ABC ferð","Þetta er fyrsta ferðin",new Image[0],"",new Date(),1234,10,10,"Austurland",12,0);
+        DayTour tveir = new DayTour(1,"Peninga ferð","Þetta er dýrasta ferðin",new Image[0],"",new Date(),100000,15,15,"Vesturland",8,0);
+        DayTour þrir = new DayTour(1,"Stjörnu ferð","Þetta er besta ferðin",new Image[0],"",new Date(),5000,20,10,"Suðurland",8,5);
+        DayTour fjorir = new DayTour(1,"Norður ferð","Þetta er Norðurlands ferðin",new Image[0],"",new Date(),4000,10,10,"Norðurland",2,3);
+        DayTour fimm = new DayTour(1,"Uppbókuð ferð","Þetta er uppbókuð ferð",new Image[0],"",new Date(),1500,10,0,"Vesturland",3,0);
         dt = new DayTour[]{einn, tveir, þrir, fjorir, fimm};
         Booking fyrsta = new Booking("Kalli", 1, 5);
         Booking onnur = new Booking("Sigga", 2, 6);;
