@@ -37,15 +37,8 @@ public class Comment {
 
     public float getRating() { return rating; }
 
-    public void addLike(){
-        likes++;
-    }
-
     public Date getDate(){
         return date;
     }
-
-
-
 
 }

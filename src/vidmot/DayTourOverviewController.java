@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vinnsla.DayTourRepository;
 import vinnsla.DayTour;
@@ -29,7 +30,6 @@ public class DayTourOverviewController {
     @FXML private ImageView goBackImg;
     @FXML private Label goBackLabel;
     @FXML private StackPane stackPane;
-    private static final String user = User.getUsername();
     private Scene scene;
 
     public void init(Scene scene){
@@ -47,7 +47,7 @@ public class DayTourOverviewController {
 
         DayTour[] dayTours = null;
         try {
-            dayTours = DayTourRepository.getDayToursByUserBooked(user);
+            dayTours = DayTourRepository.getDayToursByUserBooked(User.getUsername());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,7 +73,7 @@ public class DayTourOverviewController {
             cancelButton.setLayoutY(236);
             cancelButton.getStylesheets().add(Objects.requireNonNull(getClass().getResource("../styles/style.css")).toExternalForm());
             cancelButton.setOnAction(e -> {
-                DayTourRepository.removeBooking(user, dt.getId(), ((Label) dtListing.lookup("#title")).getText());
+                DayTourRepository.removeBooking(User.getUsername(), dt.getId(), ((Label) dtListing.lookup("#title")).getText());
                 showBookedDayTours();
             });
             dtListing.getChildren().add(cancelButton);
@@ -83,7 +83,7 @@ public class DayTourOverviewController {
     public void showYourDayTours(){
         DayTour[] dayTours = null;
         try {
-            dayTours = DayTourRepository.getDayToursByOwner(user);
+            dayTours = DayTourRepository.getDayToursByOwner(User.getUsername());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -115,6 +115,7 @@ public class DayTourOverviewController {
                 }
                 Stage dialogStage = new Stage();
                 Scene dialogScene = new Scene(parent, 800,790);
+                dialogStage.initModality(Modality.APPLICATION_MODAL); // notandi má ekki nota aðal gluggann fyrr en hann er búinn að loka dialognum
                 dialogStage.setScene(dialogScene);
                 dialogStage.setResizable(false);
                 AddTourDialog cont = fxmlLoader.getController();
@@ -156,6 +157,7 @@ public class DayTourOverviewController {
         Parent parent = fxmlLoader.load();
         Stage dialogStage = new Stage();
         Scene dialogScene = new Scene(parent, 800,790);
+        dialogStage.initModality(Modality.APPLICATION_MODAL); // notandi má ekki nota aðal gluggann fyrr en hann er búinn að loka dialognum
         dialogStage.setScene(dialogScene);
         dialogStage.setResizable(false);
         AddTourDialog cont = fxmlLoader.getController();

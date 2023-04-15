@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vinnsla.Comment;
 import vinnsla.DayTour;
@@ -50,7 +51,6 @@ public class DayTourSiteController {
     @FXML private Button decButton;
     @FXML private TextArea commentText;
     @FXML private StackPane stackPane;
-    @FXML private AnchorPane anchorPane;
     @FXML private ImageView goBackImg;
     @FXML private Label goBackLabel;
     @FXML private ComboBox<String> commentOrder;
@@ -68,10 +68,11 @@ public class DayTourSiteController {
         this.dtImages.setImage(dt.getFrontImage());
         this.date.setText("Date: " + (new SimpleDateFormat("dd/MM/yyyy").format(dt.getDate())));
         this.area.setText("Location: " + dt.getLocation());
+        this.duration.setText("Duration: " + dt.getDuration() + " Hours");
 
         this.images = dt.getImages();
 
-        ObservableList<String> order = FXCollections.observableArrayList("Aldri", "Likes");
+        ObservableList<String> order = FXCollections.observableArrayList("Age", "Likes");
 
         commentOrder.setItems(order);
         commentOrder.setValue(order.get(0));
@@ -79,13 +80,13 @@ public class DayTourSiteController {
             try {
                 showComments();
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         });
 
 
         // ef notandi hefur bókað ferðina, þá getur hann ekki bókað hana aftur
-        if(DayTourRepository.hasUserBookedDayTour(dt.getId())){
+        if(DayTourRepository.hasUserBookedDayTour(dt.getId()) || dt.isFull()){
             bookButton.setDisable(true);
         }
 
@@ -155,11 +156,11 @@ public class DayTourSiteController {
         Parent parent = fxmlLoader.load();
         Stage dialogStage = new Stage();
         Scene dialogScene = new Scene(parent, 600,370);
+        dialogStage.initModality(Modality.APPLICATION_MODAL); // notandi má ekki nota aðal gluggann fyrr en hann er búinn að loka dialognum
         dialogStage.setScene(dialogScene);
         dialogStage.setResizable(false);
         BookTourDialog cont = fxmlLoader.getController();
         cont.show(dt);
-
         dialogStage.showAndWait();
 
         // uppfærum upplýsingar eftir að notandinn lokar dialognum.
@@ -244,6 +245,7 @@ public class DayTourSiteController {
      * Þegar notandi ýtir á "Comment" takkann
      */
     public void makeComment() throws Exception {
+        if(commentText.getText().equals("")) return;
         if(giveRatingCheckbox.isSelected()){ // gefa rating
             DayTourRepository.addComment(dt.getId(), commentText.getText(), Float.parseFloat(ratingField.getText()));
             userCannotRate();

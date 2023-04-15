@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import vinnsla.DayTour;
 import vinnsla.DayTourRepository;
@@ -90,7 +91,7 @@ public class AddTourDialog {
      * Title má ekki vera tómt, eða hafa sama title og einhver önnur dagsferð
      * Duration, Price og availableSeats verða að vera heiltölur >= 0.
      * if isEditing, þá má availableSeats ekki vera minni en fjöldi manns sem er bókaður fyrir þessa dagsferð.
-     *
+     * links á images verða að virka
      * @return skilar true ef notandi má búa til dagsferð, annars false
      */
     private boolean checkInput(){
@@ -125,6 +126,20 @@ public class AddTourDialog {
                 errorText.setText("There are " + (dt.getMaxSpots() - dt.getSpotsLeft()) + " people " +
                         "booked for this day tour \n the amount of available seats cannot be less than that!");
                 return false;
+            }
+        }
+
+        if(!images.getText().equals("")){
+            String[] imgs = images.getText().split(",");
+            int i = 1;
+            for(String img : imgs){
+                try{
+                    new Image(img);
+                }catch (IllegalArgumentException e){
+                    errorText.setText("Image number " + i + " is not a valid image link!");
+                    return false;
+                }
+                i++;
             }
         }
 
