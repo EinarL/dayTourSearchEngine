@@ -51,7 +51,6 @@ public class DayTourSiteController {
     @FXML private Button decButton;
     @FXML private TextArea commentText;
     @FXML private StackPane stackPane;
-    @FXML private AnchorPane anchorPane;
     @FXML private ImageView goBackImg;
     @FXML private Label goBackLabel;
     @FXML private ComboBox<String> commentOrder;
@@ -69,6 +68,7 @@ public class DayTourSiteController {
         this.dtImages.setImage(dt.getFrontImage());
         this.date.setText("Date: " + (new SimpleDateFormat("dd/MM/yyyy").format(dt.getDate())));
         this.area.setText("Location: " + dt.getLocation());
+        this.duration.setText("Duration: " + dt.getDuration() + " Hours");
 
         this.images = dt.getImages();
 
@@ -245,6 +245,7 @@ public class DayTourSiteController {
      * Þegar notandi ýtir á "Comment" takkann
      */
     public void makeComment() throws Exception {
+        if(commentText.getText().equals("")) return;
         if(giveRatingCheckbox.isSelected()){ // gefa rating
             DayTourRepository.addComment(dt.getId(), commentText.getText(), Float.parseFloat(ratingField.getText()));
             userCannotRate();

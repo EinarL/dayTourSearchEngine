@@ -30,7 +30,6 @@ public class DayTourOverviewController {
     @FXML private ImageView goBackImg;
     @FXML private Label goBackLabel;
     @FXML private StackPane stackPane;
-    private static final String user = User.getUsername();
     private Scene scene;
 
     public void init(Scene scene){
@@ -48,7 +47,7 @@ public class DayTourOverviewController {
 
         DayTour[] dayTours = null;
         try {
-            dayTours = DayTourRepository.getDayToursByUserBooked(user);
+            dayTours = DayTourRepository.getDayToursByUserBooked(User.getUsername());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -74,7 +73,7 @@ public class DayTourOverviewController {
             cancelButton.setLayoutY(236);
             cancelButton.getStylesheets().add(Objects.requireNonNull(getClass().getResource("../styles/style.css")).toExternalForm());
             cancelButton.setOnAction(e -> {
-                DayTourRepository.removeBooking(user, dt.getId(), ((Label) dtListing.lookup("#title")).getText());
+                DayTourRepository.removeBooking(User.getUsername(), dt.getId(), ((Label) dtListing.lookup("#title")).getText());
                 showBookedDayTours();
             });
             dtListing.getChildren().add(cancelButton);
@@ -84,7 +83,7 @@ public class DayTourOverviewController {
     public void showYourDayTours(){
         DayTour[] dayTours = null;
         try {
-            dayTours = DayTourRepository.getDayToursByOwner(user);
+            dayTours = DayTourRepository.getDayToursByOwner(User.getUsername());
         } catch (Exception e) {
             e.printStackTrace();
         }
