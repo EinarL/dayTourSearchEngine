@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import vinnsla.DayTourRepository;
 import vinnsla.DayTour;
@@ -115,6 +116,7 @@ public class DayTourOverviewController {
                 }
                 Stage dialogStage = new Stage();
                 Scene dialogScene = new Scene(parent, 800,790);
+                dialogStage.initModality(Modality.APPLICATION_MODAL); // notandi má ekki nota aðal gluggann fyrr en hann er búinn að loka dialognum
                 dialogStage.setScene(dialogScene);
                 dialogStage.setResizable(false);
                 AddTourDialog cont = fxmlLoader.getController();
@@ -156,6 +158,7 @@ public class DayTourOverviewController {
         Parent parent = fxmlLoader.load();
         Stage dialogStage = new Stage();
         Scene dialogScene = new Scene(parent, 800,790);
+        dialogStage.initModality(Modality.APPLICATION_MODAL); // notandi má ekki nota aðal gluggann fyrr en hann er búinn að loka dialognum
         dialogStage.setScene(dialogScene);
         dialogStage.setResizable(false);
         AddTourDialog cont = fxmlLoader.getController();

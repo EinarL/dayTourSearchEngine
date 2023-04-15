@@ -46,6 +46,6 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ComboBox fx:id="paymentCombo" layoutX="212.0" layoutY="215.0" prefWidth="150.0" style="-fx-font-size: 12;" />
+      <ComboBox fx:id="paymentCombo" layoutX="212.0" layoutY="213.0" prefWidth="150.0" stylesheets="@../styles/style.css" />
    </children>
 </AnchorPane>

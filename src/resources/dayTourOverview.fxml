@@ -24,7 +24,7 @@
                   </Label>
                   <ScrollPane layoutX="9.0" layoutY="108.0" prefHeight="671.0" prefWidth="1056.0" stylesheets="@../styles/scrollPaneStyles.css">
                      <content>
-                        <VBox fx:id="bookedVbox" prefHeight="668.0" prefWidth="1030.0" />
+                        <VBox fx:id="bookedVbox" prefHeight="668.0" prefWidth="1030.0" spacing="5.0" />
                      </content>
                   </ScrollPane>
                   <ImageView fx:id="goBackImg" fitHeight="40.0" fitWidth="42.0" layoutX="9.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
@@ -50,7 +50,7 @@
                   </Label>
                   <ScrollPane layoutX="9.0" layoutY="909.0" prefHeight="671.0" prefWidth="1056.0" stylesheets="@../styles/scrollPaneStyles.css">
                      <content>
-                        <VBox fx:id="yourVbox" prefHeight="668.0" prefWidth="1030.0" />
+                        <VBox fx:id="yourVbox" prefHeight="668.0" prefWidth="1030.0" spacing="5.0" />
                      </content>
                   </ScrollPane>
                   <Button layoutX="818.0" layoutY="848.0" mnemonicParsing="false" onAction="#addDayTour" prefHeight="56.0" prefWidth="229.0" text=" Add a Day Tour">
