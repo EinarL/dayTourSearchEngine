@@ -11,12 +11,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import vinnsla.Data;
 import vinnsla.DayTourRepository;
 import vinnsla.DayTour;
 
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -56,13 +58,17 @@ public class DayToursController implements Initializable {
      * Þessi aðferð birtir dagsferðirnar á "dayTourSearch.fxml" gluggann.
      */
     public void showDayTours() throws IOException {
-        DayTour[] dayTours = null;
-        try {
-            dayTours = DayTourRepository.getDayTours(areaDropdown.getValue(), searchBar.getText(), sortDropdown.getValue());
-        } catch (Exception e) {
-            e.printStackTrace();
+        ArrayList<DayTour> dayTours = Data.getDayTours();
+        if(dayTours == null){
+            try {
+                dayTours = DayTourRepository.getDayTours(areaDropdown.getValue(), searchBar.getText(), sortDropdown.getValue());
+                Data.setDayTours(dayTours);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if(dayTours == null) return;
         }
-        if(dayTours == null) return;
+        dayTours = Data.getToursBasedOnInput(searchBar.getText(), areaDropdown.getValue(), sortDropdown.getValue());
 
         dayTourWindow.getChildren().clear(); // fjarlægjum allar dagsferðir áður en við birtum þær
         for(DayTour dt : dayTours){

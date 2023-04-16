@@ -67,7 +67,7 @@ public class DayTourRepository {
      * @param order Strengur sem segir til um hvort á að raða eftir Einkunn eða Stafrófsröð eða Verði.
      * @return skilar lista af dagsferðum.
      */
-    public static DayTour[] getDayTours(String area, String search, String order) throws Exception{
+    public static ArrayList<DayTour> getDayTours(String area, String search, String order) throws Exception{
         getConnection();
 
         String orderBy = switch (order) {
@@ -91,7 +91,7 @@ public class DayTourRepository {
         while(res.next()){
             dayTourArray.add(makeDayTour(res));
         }
-        return dayTourArray.toArray(DayTour[]::new);
+        return dayTourArray;
     }
 
     /**
@@ -137,6 +137,12 @@ public class DayTourRepository {
         pstmt.setString(9, location);
         pstmt.setInt(10, duration);
         pstmt.executeUpdate();
+
+        Statement s = conn.createStatement();
+        String query = "SELECT * from dayTours WHERE title = '" + title + "'";
+        ResultSet res = s.executeQuery(query);
+
+        Data.addDayTour(makeDayTour(res));
     }
 
     /**
@@ -169,14 +175,20 @@ public class DayTourRepository {
         pstmt.setInt(10, duration);
         pstmt.setString(11, dtTitleToEdit);
         pstmt.executeUpdate();
+
+        Statement s = conn.createStatement();
+        String query = "SELECT * from dayTours WHERE title = '" + newTitle + "'";
+        ResultSet res = s.executeQuery(query);
+
+        Data.replaceDayTour(dtTitleToEdit, makeDayTour(res));
     }
 
 
-    public static void addBooking(String user, int numParticiapants, String tourName, int id, int price){
+    public static void addBooking(String user, int numParticipants, String tourName, int id, int price){
         try{
             getConnection();
 
-            String sql = "UPDATE dayTours SET SpotsLeft = SpotsLeft - " + numParticiapants + " WHERE title = '" + tourName + "'";
+            String sql = "UPDATE dayTours SET SpotsLeft = SpotsLeft - " + numParticipants + " WHERE title = '" + tourName + "'";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
 
@@ -184,11 +196,11 @@ public class DayTourRepository {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, user);
             pstmt.setInt(2, id);
-            pstmt.setInt(3, numParticiapants);
+            pstmt.setInt(3, numParticipants);
             pstmt.setInt(4, price);
             pstmt.executeUpdate();
 
-
+            Data.editSpotsLeft(tourName,-numParticipants);
         }catch(SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -210,7 +222,7 @@ public class DayTourRepository {
             sql = "DELETE FROM bookings WHERE username = '" + user + "' AND dayTourID = " + dayTourId + " AND numParticipants = " + numParticipants;
             pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
-
+            Data.editSpotsLeft(tourName,numParticipants);
         }catch(SQLException | ClassNotFoundException e){
             e.printStackTrace();
         }
@@ -387,6 +399,8 @@ public class DayTourRepository {
         pstmt.setString(2, Integer.toString(dayTourID));
 
         pstmt.executeUpdate();
+
+        Data.updateRating(dayTourID, r);
     }
 
     public static boolean hasUserLikedComment(int commentID){
