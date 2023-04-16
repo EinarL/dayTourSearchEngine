@@ -3,13 +3,15 @@ package vinnsla;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
  * Klasi fyrir day tour
  */
 
-public class DayTour{
+public class DayTour extends ArrayList<DayTour> {
 
     private int ID;
     private String tourTitle;
@@ -68,6 +70,10 @@ public class DayTour{
         return spotsLeft;
     }
 
+    public void setSpotsLeft(int spots) {
+        spotsLeft += spots;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -78,6 +84,10 @@ public class DayTour{
 
     public float getRating() {
         return rating;
+    }
+
+    public void setRating(float r) {
+        rating = r;
     }
 
     public Image[] getImages() {
@@ -97,6 +107,4 @@ public class DayTour{
     public boolean isFull(){
         return spotsLeft == 0;
     }
-
-
 }
